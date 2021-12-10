@@ -336,6 +336,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hotwired/turbo-rails@npm:^7.1.0":
+  version: 7.1.0
+  resolution: "@hotwired/turbo-rails@npm:7.1.0"
+  dependencies:
+    "@hotwired/turbo": ^7.1.0
+    "@rails/actioncable": ^6.0.0
+  checksum: d9dfafd38d23b556cd9c5b5d41fe06c1fd24574333991eb0d71a9d894d5696fe9fe17c3f82c18337e459b7a7732ace7df99d45081cb7ba4fe361ad65642d12fb
+  languageName: node
+  linkType: hard
+
+"@hotwired/turbo@npm:^7.1.0":
+  version: 7.1.0
+  resolution: "@hotwired/turbo@npm:7.1.0"
+  checksum: 4f71ebf2ff6a396d4031d048fa4d4dba6039aed9ad68436e6df4527e975acd8427c7d2f9b3e7f61f3e9c1af987193adf4e2b640c4033d4afd3e1f914ed05ba9f
+  languageName: node
+  linkType: hard
+
 "@nodelib/fs.scandir@npm:2.1.5":
   version: 2.1.5
   resolution: "@nodelib/fs.scandir@npm:2.1.5"
@@ -380,6 +397,13 @@ __metadata:
     mkdirp: ^1.0.4
     rimraf: ^3.0.2
   checksum: c96381d4a37448ea280951e46233f7e541058cf57a57d4094dd4bdcaae43fa5872b5f2eb6bfb004591a68e29c5877abe3cdc210cb3588cbf20ab2877f31a7de7
+  languageName: node
+  linkType: hard
+
+"@rails/actioncable@npm:^6.0.0":
+  version: 6.1.4
+  resolution: "@rails/actioncable@npm:6.1.4"
+  checksum: 9682388672179979033d8594e3c440ab5c208b5c1c082dd8bdb72dbef7b578fdd848a8aae47f3099af2680d4f0921cd11af194fca79a09441e81b6189dea8591
   languageName: node
   linkType: hard
 
@@ -1654,6 +1678,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
+    "@hotwired/turbo-rails": ^7.1.0
     "@vitejs/plugin-react": ^1.1.1
     react: ^17.0.2
     react-dom: ^17.0.2

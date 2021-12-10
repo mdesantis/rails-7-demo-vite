@@ -28,3 +28,5 @@ console.log('Visit the guide for more information: ', 'https://vite-ruby.netlify
 
 // Example: Import a stylesheet in app/javascript/index.css
 // import '~/index.css'
+
+import "@hotwired/turbo-rails"

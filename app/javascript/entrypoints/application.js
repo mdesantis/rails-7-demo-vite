@@ -26,5 +26,5 @@ console.log('Visit the guide for more information: ', 'https://vite-ruby.netlify
 // Turbolinks.start()
 // ActiveStorage.start()
 
-// Example: Import a stylesheet in app/frontend/index.css
+// Example: Import a stylesheet in app/javascript/index.css
 // import '~/index.css'

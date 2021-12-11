@@ -1,9 +1,12 @@
 import { useState } from 'react'
-import logo from './logo.svg'
+import logoSeagull from './logoSeagull.svg'
+import logoEnergyYellow from './logoEnergyYellow.svg'
 import './App.css'
 
-function App() {
+function App({ logoColor }) {
   const [count, setCount] = useState(0)
+
+  const logo = logoColor === 'energyYellow' ? logoEnergyYellow : logoSeagull
 
   return (
     <div className="App">
@@ -20,21 +23,19 @@ function App() {
         </p>
         <p>
           <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
+            className="App-link seagull"
+            href="/hello_react"
+            data-turbo="false"
           >
-            Learn React
+            Logo Seagull
           </a>
           {' | '}
           <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
+            className="App-link energyYellow"
+            href="/hello_react_2"
+            data-turbo="false"
           >
-            Vite Docs
+            Logo Energy Yellow
           </a>
         </p>
       </header>

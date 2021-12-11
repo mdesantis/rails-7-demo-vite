@@ -24,8 +24,12 @@
   color: white;
 }
 
-.App-link {
+.App-link.seagull {
   color: #61dafb;
+}
+
+.App-link.energyYellow {
+  color: #FBE160;
 }
 
 @keyframes App-logo-spin {

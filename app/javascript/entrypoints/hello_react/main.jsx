@@ -28,7 +28,19 @@ function unmountReactComponents() {
   ReactDOM.unmountComponentAtNode(element)
 }
 
+function resetReactComponentsAfterTurboPageCacheRestoring(event) {
+  if (!event.state.turbo) {
+    return
+  }
+
+  unmountReactComponents()
+  mountReactComponents()
+}
+
 document.addEventListener('DOMContentLoaded', mountReactComponents)
 document.addEventListener('turbo:render', mountReactComponents)
 
 document.addEventListener('turbo:before-render', unmountReactComponents)
+
+// Reset React components after Turbo cache restoring in order to prevent issues with dirty cache
+window.addEventListener('popstate', resetReactComponentsAfterTurboPageCacheRestoring)

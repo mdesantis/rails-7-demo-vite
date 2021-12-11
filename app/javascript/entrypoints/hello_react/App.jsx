@@ -25,7 +25,6 @@ function App({ logoColor }) {
           <a
             className="App-link seagull"
             href="/hello_react"
-            data-turbo="false"
           >
             Logo Seagull
           </a>
@@ -33,7 +32,6 @@ function App({ logoColor }) {
           <a
             className="App-link energyYellow"
             href="/hello_react_2"
-            data-turbo="false"
           >
             Logo Energy Yellow
           </a>

@@ -1,2 +1,2 @@
 import "@hotwired/turbo-rails"
-import './hello_react/main.jsx'
+import '../hello_react/main.jsx'

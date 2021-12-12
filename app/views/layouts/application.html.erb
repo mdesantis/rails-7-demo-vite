@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
     <title>Rails7DemoVite</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
@@ -8,6 +9,7 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= vite_client_tag %>
+    <%= vite_react_refresh_tag %>
     <%= vite_javascript_tag 'application', "data-turbo-track": "reload" %>
     <!--
       If using a TypeScript entrypoint file:

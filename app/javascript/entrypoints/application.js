@@ -29,5 +29,5 @@
 // Example: Import a stylesheet in app/javascript/index.css
 // import '~/index.css'
 
-import "@hotwired/turbo-rails"
-import 'water.css'
+// import.meta.globEager needs a variable declaration, otherwise it raises a syntax error.
+const _initiators = import.meta.globEager('../initiators/application/**/*.js')

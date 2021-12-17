@@ -7,3 +7,14 @@
 </div>
 
 <%= link_to "New page", new_page_path %>
+
+<% container_element_id = SecureRandom.uuid %>
+<script
+  type="application/json"
+  class="react-component-mount"
+  data-component-name="application/hello"
+  data-container-element-id="<%= container_element_id %>"
+>
+  <%= { hello: 'hello', '<script>': '</script>' }.to_json.html_safe %>
+</script>
+<div id="<%= container_element_id %>"></div>

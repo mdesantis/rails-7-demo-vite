@@ -1,30 +1,20 @@
 import ReactDOM from 'react-dom'
 
-import lazedComponentHOF from './lazed_component_hof'
-
 function componentMountElements() {
   return document.getElementsByClassName('react-component-mount')
 }
+
+const componentsEagerGlobImport = import.meta.globEager('/components/**/*.jsx')
 
 function mountComponents() {
   Array.from(componentMountElements()).forEach((element) => {
     const { componentPath, containerElementId } = element.dataset
     const containerElement = document.getElementById(containerElementId)
     const props = JSON.parse(element.textContent)
-    const componentsGlobImport = import.meta.glob('/components/**/*.jsx')
     const fullComponentPath = `/components/${componentPath}.jsx`
-    const lazyImport = componentsGlobImport[fullComponentPath]
+    const component = componentsEagerGlobImport[fullComponentPath].default
 
-    if (!lazyImport) {
-      throw new Error(
-        `the file that should define the React component at path "${fullComponentPath}" was not found; perhaps you ` +
-        'misspelled it?'
-      )
-    }
-
-    const lazedComponent = lazedComponentHOF(lazyImport)
-
-    ReactDOM.render(lazedComponent(props), containerElement)
+    ReactDOM.render(component(props), containerElement)
   })
 }
 

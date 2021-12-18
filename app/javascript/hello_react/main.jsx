@@ -1,24 +1,24 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
 import './index.css'
+
+import ReactDOM from 'react-dom'
+import { StrictMode } from 'react'
+
 import App from './App'
 
 function mountReactComponents() {
-  const mountElement = document.getElementsByClassName('react-component-mount')[0]
+  const [mountElement] = document.getElementsByClassName('react-component-mount')
   const { containerElementId } = mountElement.dataset
   const containerElement = document.getElementById(containerElementId)
   const props = JSON.parse(mountElement.textContent)
 
   ReactDOM.render(
-    <React.StrictMode>
-      <App {...props} />
-    </React.StrictMode>,
+    <StrictMode><App {...props} /></StrictMode>,
     containerElement
   )
 }
 
 function unmountReactComponents() {
-  const mountElement = document.getElementsByClassName('react-component-mount')[0]
+  const [mountElement] = document.getElementsByClassName('react-component-mount')
   const { containerElementId } = mountElement.dataset
   const containerElement = document.getElementById(containerElementId)
 

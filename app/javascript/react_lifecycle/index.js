@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom'
 
-import LazedComponent from './lazed_component'
+import lazedComponentHOF from './lazed_component_hof'
 
 function componentMountElements() {
   return document.getElementsByClassName('react-component-mount')
@@ -13,8 +13,9 @@ function mountComponents() {
     const props = JSON.parse(element.textContent)
     const componentsGlobImport = import.meta.glob('/components/**/*.jsx')
     const lazyImport = componentsGlobImport[`/components/${componentName}.jsx`]
+    const lazedComponent = lazedComponentHOF(lazyImport)
 
-    ReactDOM.render(LazedComponent(lazyImport)(props), containerElement)
+    ReactDOM.render(lazedComponent(props), containerElement)
   })
 }
 

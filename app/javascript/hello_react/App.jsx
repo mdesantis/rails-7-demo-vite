@@ -1,16 +1,18 @@
-import { useState } from 'react'
-import logoSeagull from './logoSeagull.svg'
-import logoEnergyYellow from './logoEnergyYellow.svg'
-import { navigator } from '@hotwired/turbo'
 import './App.css'
+
+import { useState } from 'react'
+
+import logoEnergyYellow from './logoEnergyYellow.svg'
+import logoSeagull from './logoSeagull.svg'
+import { navigator } from '@hotwired/turbo'
 
 function App(props) {
   const [count, setCount] = useState(0)
   const [logoColor, setLogoColor] = useState(props.logoColor)
 
-  const handleChangeLogoLinks = (event, logoColor) => {
+  const handleChangeLogoLinks = (event, newLogoColor) => {
     event.preventDefault()
-    setLogoColor(logoColor)
+    setLogoColor(newLogoColor)
     navigator.history.push(new URL(event.target.href))
   }
 
@@ -20,7 +22,7 @@ function App(props) {
         <img src={logoColor === 'energyYellow' ? logoEnergyYellow : logoSeagull} className="App-logo" alt="logo" />
         <p>Hello Vite + React!</p>
         <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
+          <button type="button" onClick={() => setCount((oldCount) => oldCount + 1)}>
             count is: {count}
           </button>
         </p>

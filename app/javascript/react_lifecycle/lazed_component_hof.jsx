@@ -1,6 +1,6 @@
-import { lazy, Suspense } from 'react'
+import { Suspense, lazy } from 'react'
 
-export default function LazedComponent(lazyImport) {
+export default function LazedComponentHOF(lazyImport) {
   const LazyComponent = lazy(lazyImport)
 
   return function LazedComponent(props) {

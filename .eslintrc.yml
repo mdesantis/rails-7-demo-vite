@@ -60,6 +60,10 @@ rules:
     - always
   formatjs/no-offset:
     -  error
+  func-style:
+    - error
+    - declaration
+    - allowArrowFunctions: true
   function-call-argument-newline:
     - error
     - consistent

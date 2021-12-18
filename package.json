@@ -1,5 +1,8 @@
 {
   "private": true,
+  "engines": {
+    "node": "v14.x"
+  },
   "dependencies": {
     "@hotwired/turbo-rails": "^7.1.0",
     "react": "^17.0.2",

@@ -1,0 +1,45 @@
+require: rubocop-rails
+
+AllCops:
+  TargetRubyVersion: 3.0
+  Exclude:
+    - 'bin/**/*'
+    - 'config/**/*'
+    - 'config.ru'
+    - 'db/schema.rb'
+    - 'node_modules/**/*'
+    - 'tmp/**/*'
+  NewCops: enable
+
+Layout/InitialIndentation:
+  Exclude:
+    - '**/*.erb'
+Layout/LineLength:
+  Max: 120
+Layout/TrailingEmptyLines:
+  Exclude:
+    - '**/*.erb'
+
+Metrics/MethodLength:
+  CountAsOne:
+      - array
+      - hash
+      - heredoc
+
+Naming/VariableNumber:
+  EnforcedStyle: snake_case
+
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+Style/Documentation:
+  Enabled: false
+Style/EmptyMethod:
+  Enabled: false
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+Style/FrozenStringLiteralComment:
+  Exclude:
+    - '**/*.erb'
+Style/SymbolArray:
+  Exclude:
+    - 'app/controllers/**/*'

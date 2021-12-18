@@ -41,6 +41,9 @@ gem 'vite_rails' # vite_hanami for Hanami apps, vite_ruby for Rack apps
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  
+  gem "rubocop", require: false
+  gem "rubocop-rails", require: false
 end
 
 group :development do

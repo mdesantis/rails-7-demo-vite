@@ -4,28 +4,25 @@ import './index.css'
 import App from './App'
 
 function mountReactComponents() {
-  const element = document.getElementById('root')
-
-  let { reactComponentProps } = element.dataset
-
-  if (!reactComponentProps) {
-    reactComponentProps = {}
-  } else {
-    reactComponentProps = JSON.parse(reactComponentProps)
-  }
+  const mountElement = document.getElementsByClassName('react-component-mount')[0]
+  const { containerElementId } = mountElement.dataset
+  const containerElement = document.getElementById(containerElementId)
+  const props = JSON.parse(mountElement.textContent)
 
   ReactDOM.render(
     <React.StrictMode>
-      <App {...reactComponentProps} />
+      <App {...props} />
     </React.StrictMode>,
-    element
+    containerElement
   )
 }
 
 function unmountReactComponents() {
-  const element = document.getElementById('root')
+  const mountElement = document.getElementsByClassName('react-component-mount')[0]
+  const { containerElementId } = mountElement.dataset
+  const containerElement = document.getElementById(containerElementId)
 
-  ReactDOM.unmountComponentAtNode(element)
+  ReactDOM.unmountComponentAtNode(containerElement)
 }
 
 function resetReactComponentsAfterTurboPageCacheRestoring(event) {

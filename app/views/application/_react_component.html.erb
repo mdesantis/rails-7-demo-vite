@@ -1,0 +1,11 @@
+<% component_props ||= {} %>
+<% container_element_id = SecureRandom.uuid %>
+<script
+  type="application/json"
+  class="react-component-mount"
+  data-component-name="<%= component_name %>"
+  data-container-element-id="<%= container_element_id %>"
+>
+  <%= component_props.to_json.html_safe %>
+</script>
+<div id="<%= container_element_id %>"></div>

@@ -1,0 +1,14 @@
+# Rails assets and Webpacker packs
+/public
+
+# Uploaded files
+/storage
+
+# Tempfiles
+/tmp
+
+# Third party libraries
+/vendor
+
+# NPM packages directories
+node_modules

@@ -6,6 +6,7 @@ class PagesController < ApplicationController
   # GET /pages or /pages.json
   def index
     @pages = Page.all
+    @props = render_to_string formats: :json
   end
 
   # GET /pages/1 or /pages/1.json

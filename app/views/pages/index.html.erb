@@ -1,3 +1,4 @@
+<% if false %>
 <p style="color: green"><%= notice %></p>
 
 <h1>Pages</h1>
@@ -7,5 +8,6 @@
 </div>
 
 <%= link_to "New page", new_page_path %>
+<% end %>
 
-<%= render 'react_component', component_name: 'application/hello', component_props: { hello: 'hello' } %>
+<%= render 'react_component', path: 'pages/index', props: @props %>

@@ -8,11 +8,20 @@ function componentMountElements() {
 
 function mountComponents() {
   Array.from(componentMountElements()).forEach((element) => {
-    const { componentName, containerElementId } = element.dataset
+    const { componentPath, containerElementId } = element.dataset
     const containerElement = document.getElementById(containerElementId)
     const props = JSON.parse(element.textContent)
     const componentsGlobImport = import.meta.glob('/components/**/*.jsx')
-    const lazyImport = componentsGlobImport[`/components/${componentName}.jsx`]
+    const fullComponentPath = `/components/${componentPath}.jsx`
+    const lazyImport = componentsGlobImport[fullComponentPath]
+
+    if (!lazyImport) {
+      throw new Error(
+        `the file that should define the React component at path "${fullComponentPath}" was not found; perhaps you ` +
+        'misspelled it?'
+      )
+    }
+
     const lazedComponent = lazedComponentHOF(lazyImport)
 
     ReactDOM.render(lazedComponent(props), containerElement)

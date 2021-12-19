@@ -6,13 +6,11 @@ export default function Page(props) {
   return (
     <div>
       <p>
-        <strong>Author:</strong>{' '}
-        {page.author}
+        <strong>Author:</strong> {page.author}
       </p>
 
       <p>
-        <strong>Content:</strong>{' '}
-        {page.content}
+        <strong>Content:</strong> {page.content}
       </p>
 
       <p>

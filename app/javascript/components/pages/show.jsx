@@ -1,13 +1,12 @@
 import { StrictMode } from 'react'
 
-import { editPagePath, pagePath, pagesPath } from '/routes'
-
+import AuthenticityTokenField from '/components/application/_authenticity_token_field'
 import Page from './_page'
+
+import { editPagePath, pagePath, pagesPath } from '/routes'
 
 export default function Show(props) {
   const page = props
-
-  const authenticityToken = document.querySelector('meta[name="csrf-token"]').content
 
   return (
     <StrictMode>
@@ -19,7 +18,7 @@ export default function Show(props) {
         <form className="button_to" method="post" action={pagePath(page)}>
           <input type="hidden" name="_method" value="delete" autoComplete="off" />
           <button type="submit">Destroy this page</button>
-          <input type="hidden" name="authenticity_token" value={authenticityToken} autoComplete="off" />
+          <AuthenticityTokenField />
         </form>
       </div>
     </StrictMode>

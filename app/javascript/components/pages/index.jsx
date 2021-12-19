@@ -1,8 +1,8 @@
 import { StrictMode } from 'react'
 
-import { newPagePath } from '/routes'
-
 import Page from './_page'
+
+import { newPagePath } from '/routes'
 
 export default function Index(props) {
   return (

@@ -1,5 +1,7 @@
 import { StrictMode } from 'react'
 
+import { newPagePath, pagePath } from '/routes'
+
 export default function Index(props) {
   return (
     <StrictMode>
@@ -20,14 +22,14 @@ export default function Index(props) {
               </p>
 
               <p>
-                <a href={`/pages/${page.id}`}>Show this page</a>
+                <a href={pagePath(page)}>Show this page</a>
               </p>
             </div>
           )
         })}
       </div>
 
-      <a href="/pages/new">New page</a>
+      <a href={newPagePath()}>New page</a>
     </StrictMode>
   )
 }

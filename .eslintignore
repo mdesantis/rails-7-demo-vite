@@ -12,3 +12,6 @@
 
 # NPM packages directories
 node_modules
+
+# JS Routes generated file
+app/javascript/routes.js

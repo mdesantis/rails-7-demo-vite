@@ -40,6 +40,8 @@ gem 'bootsnap', require: false
 
 gem 'vite_rails' # vite_hanami for Hanami apps, vite_ruby for Rack apps
 
+gem 'js-routes'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri mingw x64_mingw]

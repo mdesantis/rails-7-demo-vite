@@ -1,3 +1,5 @@
+<% if false %>
+
 <h1>Editing page</h1>
 
 <%= render "form", page: @page %>
@@ -8,3 +10,7 @@
   <%= link_to "Show this page", @page %> |
   <%= link_to "Back to pages", pages_path %>
 </div>
+
+<% end %>
+
+<%= render 'react_component', path: 'pages/edit', props: @props %>

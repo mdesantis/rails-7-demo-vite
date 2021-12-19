@@ -22,6 +22,7 @@ class PagesController < ApplicationController
 
   # GET /pages/1/edit
   def edit
+    @props = render_to_string formats: :json
   end
 
   # POST /pages or /pages.json

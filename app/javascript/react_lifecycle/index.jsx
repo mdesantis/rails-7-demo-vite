@@ -13,6 +13,7 @@ function mountComponents() {
     const props = JSON.parse(element.textContent)
     const fullComponentPath = `/components/${componentPath}.jsx`
     const eagerImport = componentsEagerGlobImport[fullComponentPath]
+
     if (!eagerImport) {
       throw new Error(
         `the file that should define the React component at path "${fullComponentPath}" was not found; perhaps you ` +
@@ -20,9 +21,9 @@ function mountComponents() {
       )
     }
 
-    const component = eagerImport.default
+    const Component = eagerImport.default
 
-    ReactDOM.render(component(props), containerElement)
+    ReactDOM.render(<Component {...props} />, containerElement)
   })
 }
 

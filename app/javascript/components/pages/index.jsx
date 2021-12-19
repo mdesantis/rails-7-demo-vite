@@ -1,6 +1,8 @@
 import { StrictMode } from 'react'
 
-import { newPagePath, pagePath } from '/routes'
+import { newPagePath } from '/routes'
+
+import Page from './_page'
 
 export default function Index(props) {
   return (
@@ -9,23 +11,7 @@ export default function Index(props) {
 
       <div>
         {props.pages.map((page, i) => {
-          return (
-            <div key={i}>
-              <p>
-                <strong>Author:</strong>{' '}
-                {page.author}
-              </p>
-
-              <p>
-                <strong>Content:</strong>{' '}
-                {page.content}
-              </p>
-
-              <p>
-                <a href={pagePath(page)}>Show this page</a>
-              </p>
-            </div>
-          )
+          return <Page page={page} key={i} />
         })}
       </div>
 

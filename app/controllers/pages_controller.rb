@@ -11,6 +11,7 @@ class PagesController < ApplicationController
 
   # GET /pages/1 or /pages/1.json
   def show
+    @props = render_to_string formats: :json
   end
 
   # GET /pages/new

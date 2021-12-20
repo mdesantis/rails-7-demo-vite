@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import AuthenticityTokenField from '/components/application/_authenticity_token_field'
+import Errors from './form/_errors'
 
 import { pagePath, pagesPath } from '/routes'
 
@@ -23,9 +24,11 @@ export default function Form(props) {
   const submitValue = newRecord ? 'Create Page' : 'Update Page'
 
   return (
-    <form action={newRecord ? pagesPath() : pagePath(page)} acceptCharset="UTF-8" method="post">
+    <form action={newRecord ? pagesPath() : pagePath(page)} acceptCharset="UTF-8" method="post" data-remote="true">
       {newRecord || <input type="hidden" name="_method" value="patch" autoComplete="off" />}
       <AuthenticityTokenField />
+
+      <Errors errors={page.errors} />
 
       <div>
         <label style={{ 'display': 'block' }} htmlFor="page_author">Author</label>

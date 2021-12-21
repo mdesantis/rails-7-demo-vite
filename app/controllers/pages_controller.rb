@@ -1,24 +1,21 @@
 # frozen_string_literal: true
 
 class PagesController < ApplicationController
+  before_action :set_pages, only: %i[index]
   before_action :set_page, only: %i[show edit update destroy]
+  before_action :set_new_page, only: %i[new]
+  before_action :set_props, only: %i[index show new edit]
 
   def index
-    @pages = Page.all
-    set_props
   end
 
   def show
-    set_props
   end
 
   def new
-    @page = Page.new
-    set_props
   end
 
   def edit
-    set_props
   end
 
   def create
@@ -48,8 +45,16 @@ class PagesController < ApplicationController
 
   private
 
+  def set_pages
+    @pages = Page.all
+  end
+
   def set_page
     @page = Page.find(params[:id])
+  end
+
+  def set_new_page
+    @page = Page.new
   end
 
   def set_props

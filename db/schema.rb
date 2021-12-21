@@ -10,11 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_09_211017) do
+ActiveRecord::Schema.define(version: 2021_12_21_201315) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  # Custom types defined in this database.
+  # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "social_accounts_type", ["SocialAccount::Facebook"]
 
   create_table "pages", force: :cascade do |t|
     t.string "author"
     t.text "content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "social_accounts", force: :cascade do |t|
+    t.string "name", null: false
+    t.enum "type", null: false, enum_type: "social_accounts_type"
+    t.jsonb "credentials"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

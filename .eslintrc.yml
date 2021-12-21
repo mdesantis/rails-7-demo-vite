@@ -111,6 +111,8 @@ rules:
     - enforceForArrowConditionals: false
   no-invalid-this:
     - off
+  no-irregular-whitespace:
+    - off
   no-magic-numbers:
     - off
   no-multi-str:

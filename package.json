@@ -4,7 +4,11 @@
     "node": "v14.x"
   },
   "dependencies": {
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
     "@hotwired/turbo-rails": "^7.1.0",
+    "@mui/icons-material": "^5.2.5",
+    "@mui/material": "^5.2.5",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "water.css": "^2.1.1"

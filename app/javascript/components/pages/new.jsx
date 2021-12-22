@@ -1,5 +1,3 @@
-import { StrictMode } from 'react'
-
 import Form from './_form'
 
 import { pagesPath } from '/routes'
@@ -8,7 +6,7 @@ export default function New(props) {
   const { page } = props
 
   return (
-    <StrictMode>
+    <>
       <h1>New page</h1>
 
       <Form page={page} />
@@ -18,6 +16,6 @@ export default function New(props) {
       <div>
         <a href={pagesPath()}>Back to pages</a>
       </div>
-    </StrictMode>
+    </>
   )
 }

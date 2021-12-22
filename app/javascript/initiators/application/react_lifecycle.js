@@ -1,3 +1,3 @@
-import { initialize } from '/react_lifecycle'
+import ReactLifecycle from '/react_lifecycle'
 
-initialize()
+new ReactLifecycle({ 'strictMode': true }).initialize()

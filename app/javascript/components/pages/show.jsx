@@ -1,5 +1,3 @@
-import { StrictMode } from 'react'
-
 import AuthenticityTokenField from '/components/application/_authenticity_token_field'
 import Page from './_page'
 
@@ -9,7 +7,7 @@ export default function Show(props) {
   const page = props
 
   return (
-    <StrictMode>
+    <>
       <Page page={page} />
 
       <div>
@@ -21,6 +19,6 @@ export default function Show(props) {
           <AuthenticityTokenField />
         </form>
       </div>
-    </StrictMode>
+    </>
   )
 }

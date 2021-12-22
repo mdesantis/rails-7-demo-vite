@@ -1,58 +1,78 @@
 import ReactDOM from 'react-dom'
 
-function componentMountElements() {
-  return document.getElementsByClassName('react-component-mount')
-}
+import { StrictMode } from 'react'
 
-const componentsEagerGlobImport = import.meta.globEager('/components/**/*.jsx')
+export default class ReactLifecycle {
+  constructor(options) {
+    this.strictMode = options.strictMode
 
-function mountComponents() {
-  Array.from(componentMountElements()).forEach((element) => {
-    const { componentPath, containerElementId } = element.dataset
-    const containerElement = document.getElementById(containerElementId)
-    const props = JSON.parse(element.textContent)
-    const fullComponentPath = `/components/${componentPath}.jsx`
-    const eagerImport = componentsEagerGlobImport[fullComponentPath]
-
-    if (!eagerImport) {
-      throw new Error(
-        `the file that should define the React component at path "${fullComponentPath}" was not found; perhaps you ` +
-        'misspelled it?'
-      )
-    }
-
-    const Component = eagerImport.default
-
-    ReactDOM.render(<Component {...props} />, containerElement)
-  })
-}
-
-function unmountComponents() {
-  Array.from(componentMountElements()).forEach((element) => {
-    const { containerElementId } = element.dataset
-    const containerElement = document.getElementById(containerElementId)
-
-    ReactDOM.unmountComponentAtNode(containerElement)
-  })
-}
-
-function resetComponentsAfterTurboPageCacheRestoring(event) {
-  if (!event.state.turbo) {
-    return
+    this.componentsEagerGlobImport = import.meta.globEager('/components/**/*.jsx')
   }
 
-  unmountComponents()
-  mountComponents()
-}
+  componentMountElements() {
+    return document.getElementsByClassName('react-component-mount')
+  }
 
-function start() {
-  document.addEventListener('turbo:render', mountComponents)
-  document.addEventListener('turbo:before-render', unmountComponents)
-  // Reset React components after Turbo cache restoring in order to prevent issues with dirty cache
-  window.addEventListener('popstate', resetComponentsAfterTurboPageCacheRestoring)
-  mountComponents()
-}
+  mountComponents() {
+    Array.from(this.componentMountElements()).forEach((element) => {
+      const { componentPath, containerElementId } = element.dataset
+      const containerElement = document.getElementById(containerElementId)
+      const props = JSON.parse(element.textContent)
+      const fullComponentPath = `/components/${componentPath}.jsx`
+      const eagerImport = this.componentsEagerGlobImport[fullComponentPath]
 
-export function initialize() {
-  document.addEventListener('DOMContentLoaded', start)
+      if (!eagerImport) {
+        throw new Error(
+          `the file that should define the React component at path "${fullComponentPath}" was not found; perhaps you ` +
+          'misspelled it?'
+        )
+      }
+
+      const Component = eagerImport.default
+
+      if (this.strictMode) {
+        ReactDOM.render(<StrictMode><Component {...props} /></StrictMode>, containerElement)
+      } else {
+        ReactDOM.render(<Component {...props} />, containerElement)
+      }
+    })
+  }
+
+  unmountComponents() {
+    Array.from(this.componentMountElements()).forEach((element) => {
+      const { containerElementId } = element.dataset
+      const containerElement = document.getElementById(containerElementId)
+
+      ReactDOM.unmountComponentAtNode(containerElement)
+    })
+  }
+
+  resetComponentsAfterTurboPageCacheRestoring(event) {
+    if (!event.state.turbo) {
+      return
+    }
+
+    this.unmountComponents()
+    this.mountComponents()
+  }
+
+  start() {
+    document.addEventListener('turbo:render', () => {
+      this.mountComponents()
+    })
+    document.addEventListener('turbo:before-render', () => {
+      this.unmountComponents()
+    })
+    // Reset React components after Turbo cache restoring in order to prevent issues with dirty cache
+    window.addEventListener('popstate', (e) => {
+      this.resetComponentsAfterTurboPageCacheRestoring(e)
+    })
+    this.mountComponents()
+  }
+
+  initialize() {
+    document.addEventListener('DOMContentLoaded', () => {
+      this.start()
+    })
+  }
 }

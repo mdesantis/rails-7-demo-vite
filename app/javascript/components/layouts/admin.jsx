@@ -9,6 +9,8 @@ import {
   useMediaQuery
 } from '@mui/material'
 
+import Drawer from './admin/_drawer'
+
 export default function Admin(props) {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
 
@@ -25,11 +27,11 @@ export default function Admin(props) {
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
         <CssBaseline enableColorScheme />
-        <Container>
-          <main>
+        <Drawer appBarTitle={props.appBarTitle}>
+          <Container>
             {props.children}
-          </main>
-        </Container>
+          </Container>
+        </Drawer>
       </ThemeProvider>
     </StyledEngineProvider>
   )

@@ -19,6 +19,14 @@ function isFacebookSocialAccount(socialAccount) {
   return socialAccount.type === 'SocialAccount::Facebook'
 }
 
+function socialAccountExternalURL(socialAccount) {
+  if (isFacebookSocialAccount(socialAccount)) {
+    return `https://developers.facebook.com/apps/${socialAccount.credentials.appId}`
+  }
+
+  return null
+}
+
 function SocialAccountIcon(props) {
   const { socialAccount } = props
 
@@ -29,17 +37,9 @@ function SocialAccountIcon(props) {
   return null
 }
 
-function socialAccountExternalURL(socialAccount) {
-  if (isFacebookSocialAccount(socialAccount)) {
-    return `https://developers.facebook.com/apps/${socialAccount.credentials.appId}`
-  }
-
-  return null
-}
-
 export default function Index(props) {
   return (
-    <Layout>
+    <Layout appBarTitle={'Social Accounts'}>
       <TableContainer>
         <Table>
           <TableHead>

@@ -60,8 +60,16 @@ export default function Index(props) {
                       <SocialAccountIcon socialAccount={socialAccount} />
                     </TableCell>
                     <TableCell rowSpan={2}>{socialAccount.name}</TableCell>
-                    <TableCell size="small">App Id</TableCell>
-                    <TableCell size="small"><code>{socialAccount.credentials.appId}</code></TableCell>
+                    <TableCell
+                      size="small"
+                      sx={{ 'borderBottom': 0, 'pb': 0.75, 'pl': 4, 'pr': 2, 'pt': 2 }}
+                    >App Id</TableCell>
+                    <TableCell
+                      size="small"
+                      sx={{ 'borderBottom': 0, 'pb': 0.75, 'pl': 2, 'pr': 4, 'pt': 2 }}
+                    >
+                      <code>{socialAccount.credentials.appId}</code>
+                    </TableCell>
                     <TableCell rowSpan={2}>
                       <Link
                         href={socialAccountExternalURL(socialAccount)}
@@ -78,8 +86,16 @@ export default function Index(props) {
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell size="small">App Secret</TableCell>
-                    <TableCell size="small"><code>{socialAccount.credentials.appSecret}</code></TableCell>
+                    <TableCell
+                      size="small"
+                      sx={{ 'pb': 2, 'pl': 4, 'pr': 2, 'pt': 0.75 }}
+                    >App Secret</TableCell>
+                    <TableCell
+                      size="small"
+                      sx={{ 'pb': 2, 'pl': 2, 'pr': 4, 'pt': 0.75 }}
+                    >
+                      <code>{socialAccount.credentials.appSecret}</code>
+                    </TableCell>
                   </TableRow>
                 </Fragment>
               )

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class Admin::SocialAccountsController < AdminController
-  before_action :set_social_accounts, only: %i[index]
+  before_action :set_social_accounts, only: %i[index new]
   before_action :set_social_account, only: %i[show edit update destroy]
-  before_action :set_new_social_account, only: %i[new]
+  before_action :set_new_social_account, only: %i[index new]
   before_action :set_props, only: %i[index show new edit]
 
   def index

@@ -1,10 +1,6 @@
-import { Fragment } from 'react'
-
-import { Add as AddIcon, Facebook as FacebookIcon, OpenInNew as OpenInNewIcon } from '@mui/icons-material'
+import { Fragment, useState } from 'react'
 
 import Layout from '/components/layouts/admin'
-
-import { newAdminSocialAccountPath } from '/routes'
 
 import {
   Grid,
@@ -18,6 +14,13 @@ import {
   TableRow,
   Tooltip
 } from '@mui/material'
+
+import { Add as AddIcon, Facebook as FacebookIcon, OpenInNew as OpenInNewIcon } from '@mui/icons-material'
+
+import NewDialog from './_new_dialog'
+
+import { adminSocialAccountsUrl, newAdminSocialAccountPath, newAdminSocialAccountUrl } from '/routes'
+import { navigator } from '@hotwired/turbo'
 
 function isFacebookSocialAccount(socialAccount) {
   return socialAccount.type === 'SocialAccount::Facebook'
@@ -41,10 +44,19 @@ function SocialAccountIcon(props) {
   return null
 }
 
-function AppBarButtons() {
+function AppBarButtons(props) {
+  const { handleNewDialogOpen } = props
+
+  const handleNewLinkClick = (event) => {
+    if (handleNewDialogOpen) {
+      event.preventDefault()
+      handleNewDialogOpen()
+    }
+  }
+
   return (
     <Tooltip title="New Social Account">
-      <Link href={newAdminSocialAccountPath()}>
+      <Link href={newAdminSocialAccountPath()} onClick={(e) => handleNewLinkClick(e)}>
         <IconButton aria-label="new social account">
           <AddIcon fontSize="large" />
         </IconButton>
@@ -54,8 +66,23 @@ function AppBarButtons() {
 }
 
 export default function Index(props) {
+  const [newDialogOpen, setNewDialogOpen] = useState(props.newDialogOpen ?? false)
+
+  const handleOnNewDialogClose = () => {
+    setNewDialogOpen(false)
+    navigator.history.push(new URL(adminSocialAccountsUrl()))
+  }
+
+  const handleOnNewDialogOpen = () => {
+    setNewDialogOpen(true)
+    navigator.history.push(new URL(newAdminSocialAccountUrl()))
+  }
+
   return (
-    <Layout appBarTitle="Social Accounts" appBarButtons={<AppBarButtons />}>
+    <Layout
+      appBarTitle="Social Accounts"
+      appBarButtons={<AppBarButtons handleNewDialogOpen={() => handleOnNewDialogOpen()} />}>
+      <NewDialog open={newDialogOpen} onClose={() => handleOnNewDialogClose()} />
       <TableContainer>
         <Table>
           <TableHead>

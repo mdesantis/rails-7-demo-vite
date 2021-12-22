@@ -28,7 +28,7 @@ export default function Drawer(props) {
           <Typography variant="h6" noWrap component="div" sx={{ 'flexGrow': 1 }}>
             {props.appBarTitle}
           </Typography>
-          {/* <Button color="inherit">Login</Button> */}
+          {props.appBarButtons}
         </Toolbar>
       </AppBar>
       <MuiDrawer

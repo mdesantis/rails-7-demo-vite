@@ -509,6 +509,32 @@ export const serialize = __jsr.serialize;
 
 /**
  * Generates rails route to
+ * /admin/social-accounts/:id(.:format)
+ * @param {any} id
+ * @param {object | undefined} options
+ * @returns {string} route path
+ */
+export const adminSocialAccountPath = __jsr.r({"id":{"r":true},"format":{}}, [2,[7,"/"],[2,[6,"admin"],[2,[7,"/"],[2,[6,"social-accounts"],[2,[7,"/"],[2,[3,"id"],[1,[2,[8,"."],[3,"format"]]]]]]]]]);
+
+/**
+ * Generates rails route to
+ * /admin/social-accounts(.:format)
+ * @param {object | undefined} options
+ * @returns {string} route path
+ */
+export const adminSocialAccountsPath = __jsr.r({"format":{}}, [2,[7,"/"],[2,[6,"admin"],[2,[7,"/"],[2,[6,"social-accounts"],[1,[2,[8,"."],[3,"format"]]]]]]]);
+
+/**
+ * Generates rails route to
+ * /admin/social-accounts/:id/edit(.:format)
+ * @param {any} id
+ * @param {object | undefined} options
+ * @returns {string} route path
+ */
+export const editAdminSocialAccountPath = __jsr.r({"id":{"r":true},"format":{}}, [2,[7,"/"],[2,[6,"admin"],[2,[7,"/"],[2,[6,"social-accounts"],[2,[7,"/"],[2,[3,"id"],[2,[7,"/"],[2,[6,"edit"],[1,[2,[8,"."],[3,"format"]]]]]]]]]]]);
+
+/**
+ * Generates rails route to
  * /pages/:id/edit(.:format)
  * @param {any} id
  * @param {object | undefined} options
@@ -540,6 +566,14 @@ export const helloReactPath = __jsr.r({"format":{}}, [2,[7,"/"],[2,[6,"hello_rea
  * @returns {string} route path
  */
 export const helloReact2Path = __jsr.r({"format":{}}, [2,[7,"/"],[2,[6,"hello_react_2"],[1,[2,[8,"."],[3,"format"]]]]]);
+
+/**
+ * Generates rails route to
+ * /admin/social-accounts/new(.:format)
+ * @param {object | undefined} options
+ * @returns {string} route path
+ */
+export const newAdminSocialAccountPath = __jsr.r({"format":{}}, [2,[7,"/"],[2,[6,"admin"],[2,[7,"/"],[2,[6,"social-accounts"],[2,[7,"/"],[2,[6,"new"],[1,[2,[8,"."],[3,"format"]]]]]]]]]);
 
 /**
  * Generates rails route to

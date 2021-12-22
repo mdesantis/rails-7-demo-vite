@@ -1,18 +1,22 @@
 import { Fragment } from 'react'
 
-import { Facebook as FacebookIcon, OpenInNew as OpenInNewIcon } from '@mui/icons-material'
+import { Add as AddIcon, Facebook as FacebookIcon, OpenInNew as OpenInNewIcon } from '@mui/icons-material'
 
 import Layout from '/components/layouts/admin'
 
+import { newAdminSocialAccountPath } from '/routes'
+
 import {
   Grid,
+  IconButton,
   Link,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
-  TableRow
+  TableRow,
+  Tooltip
 } from '@mui/material'
 
 function isFacebookSocialAccount(socialAccount) {
@@ -37,9 +41,21 @@ function SocialAccountIcon(props) {
   return null
 }
 
+function AppBarButtons() {
+  return (
+    <Tooltip title="New Social Account">
+      <Link href={newAdminSocialAccountPath()}>
+        <IconButton aria-label="new social account">
+          <AddIcon fontSize="large" />
+        </IconButton>
+      </Link>
+    </Tooltip>
+  )
+}
+
 export default function Index(props) {
   return (
-    <Layout appBarTitle={'Social Accounts'}>
+    <Layout appBarTitle="Social Accounts" appBarButtons={<AppBarButtons />}>
       <TableContainer>
         <Table>
           <TableHead>
@@ -47,7 +63,7 @@ export default function Index(props) {
               <TableCell></TableCell>
               <TableCell>Name</TableCell>
               <TableCell colSpan={2}>Credentials</TableCell>
-              <TableCell>External Link</TableCell>
+              <TableCell>External URL</TableCell>
               <TableCell>Last Updated</TableCell>
             </TableRow>
           </TableHead>

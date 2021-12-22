@@ -27,7 +27,7 @@ export default function Admin(props) {
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
         <CssBaseline enableColorScheme />
-        <Drawer appBarTitle={props.appBarTitle}>
+        <Drawer appBarTitle={props.appBarTitle} appBarButtons={props.appBarButtons}>
           <Container>
             {props.children}
           </Container>

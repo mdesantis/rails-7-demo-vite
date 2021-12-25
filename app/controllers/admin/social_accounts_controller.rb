@@ -22,8 +22,9 @@ class Admin::SocialAccountsController < AdminController
     @social_account = SocialAccount.new(social_account_params)
 
     if @social_account.save
-      redirect_to @social_account, notice: 'Social Account was successfully created.'
+      redirect_to admin_social_accounts_path, success: 'Social Account was successfully created.'
     else
+      set_social_accounts
       @props = render_to_string :new, formats: :json
       render :new, status: :unprocessable_entity
     end
@@ -46,7 +47,7 @@ class Admin::SocialAccountsController < AdminController
   private
 
   def set_social_accounts
-    @social_accounts = SocialAccount.all
+    @social_accounts = SocialAccount.all.order(updated_at: :desc)
   end
 
   def set_social_account

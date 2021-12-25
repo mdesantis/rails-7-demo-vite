@@ -21,10 +21,8 @@ export default function Form(props) {
     setContent(event.target.value)
   }
 
-  const submitValue = newRecord ? 'Create Page' : 'Update Page'
-
   return (
-    <form action={newRecord ? pagesPath() : pagePath(page)} acceptCharset="UTF-8" method="post" data-remote="true">
+    <form action={newRecord ? pagesPath() : pagePath(page)} acceptCharset="utf-8" method="post" data-remote="true">
       {newRecord || <input type="hidden" name="_method" value="patch" autoComplete="off" />}
       <AuthenticityTokenField />
 
@@ -41,7 +39,7 @@ export default function Form(props) {
       </div>
 
       <div>
-        <input type="submit" name="commit" value={submitValue} data-disable-with={submitValue} />
+        <input type="submit" name="commit" value={newRecord ? 'Create Page' : 'Update Page'} />
       </div>
     </form>
   )

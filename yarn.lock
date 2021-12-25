@@ -3127,6 +3127,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-hook-form@npm:^7.22.5":
+  version: 7.22.5
+  resolution: "react-hook-form@npm:7.22.5"
+  peerDependencies:
+    react: ^16.8.0 || ^17
+  checksum: 73c76e132f96f01cf9bd447817dda393c57e04ab65005946cefd96436f5b49bc5fa2b3e24d2d1fa737c7334f971e28aef4f617cf25dbf89d0d019d0cb0b0e41f
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^16.7.0, react-is@npm:^16.8.1":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
@@ -3320,6 +3329,7 @@ __metadata:
     eslint-plugin-sort-destructure-keys: ^1.4.0
     react: ^17.0.2
     react-dom: ^17.0.2
+    react-hook-form: ^7.22.5
     vite: ^2.7.3
     vite-plugin-ruby: ^3.0.4
     water.css: ^2.1.1

@@ -17,7 +17,7 @@ import {
 
 import { Add as AddIcon, Facebook as FacebookIcon, OpenInNew as OpenInNewIcon } from '@mui/icons-material'
 
-import NewDialog from './_new_dialog'
+import NewDialogForm from './_new_dialog_form'
 
 import { adminSocialAccountsUrl, newAdminSocialAccountPath, newAdminSocialAccountUrl } from '/routes'
 import { navigator } from '@hotwired/turbo'
@@ -67,6 +67,7 @@ function AppBarButtons(props) {
 
 export default function Index(props) {
   const [newDialogOpen, setNewDialogOpen] = useState(props.newDialogOpen ?? false)
+  const { newSocialAccount, successMessage } = props
 
   const handleOnNewDialogClose = () => {
     setNewDialogOpen(false)
@@ -81,8 +82,10 @@ export default function Index(props) {
   return (
     <Layout
       appBarTitle="Social Accounts"
-      appBarButtons={<AppBarButtons handleNewDialogOpen={() => handleOnNewDialogOpen()} />}>
-      <NewDialog open={newDialogOpen} onClose={() => handleOnNewDialogClose()} />
+      appBarButtons={<AppBarButtons handleNewDialogOpen={() => handleOnNewDialogOpen()} />}
+      successMessage={successMessage}
+    >
+      <NewDialogForm open={newDialogOpen} onClose={() => handleOnNewDialogClose()} socialAccount={newSocialAccount} />
       <TableContainer>
         <Table>
           <TableHead>

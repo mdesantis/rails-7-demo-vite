@@ -53,6 +53,10 @@ rules:
     - warn
     - always
     - ignoreConsecutiveComments: true
+  curly:
+    - error
+    - multi-line
+    - consistent
   class-methods-use-this:
     - off
   eqeqeq:

@@ -1,9 +1,7 @@
 export default function Errors(props) {
   const { errors } = props
 
-  if (errors.length < 1) {
-    return null
-  }
+  if (errors.length < 1) return null
 
   return (
     <div style={{ 'color': 'red' }}>

@@ -48,9 +48,7 @@ export default class ReactLifecycle {
   }
 
   resetComponentsAfterTurboPageCacheRestoring(event) {
-    if (!event.state.turbo) {
-      return
-    }
+    if (!event.state.turbo) return
 
     this.unmountComponents()
     this.mountComponents()

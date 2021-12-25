@@ -27,9 +27,7 @@ function isFacebookSocialAccount(socialAccount) {
 }
 
 function socialAccountExternalURL(socialAccount) {
-  if (isFacebookSocialAccount(socialAccount)) {
-    return `https://developers.facebook.com/apps/${socialAccount.credentials.appId}`
-  }
+  if (isFacebookSocialAccount(socialAccount)) return `https://developers.facebook.com/apps/${socialAccount.credentials.appId}`
 
   return null
 }
@@ -37,9 +35,7 @@ function socialAccountExternalURL(socialAccount) {
 function SocialAccountIcon(props) {
   const { socialAccount } = props
 
-  if (isFacebookSocialAccount(socialAccount)) {
-    return <FacebookIcon titleAccess="Facebook" />
-  }
+  if (isFacebookSocialAccount(socialAccount)) return <FacebookIcon titleAccess="Facebook" />
 
   return null
 }

@@ -26,9 +26,7 @@ function unmountReactComponents() {
 }
 
 function resetReactComponentsAfterTurboPageCacheRestoring(event) {
-  if (!event.state.turbo) {
-    return
-  }
+  if (!event.state.turbo) return
 
   unmountReactComponents()
   mountReactComponents()

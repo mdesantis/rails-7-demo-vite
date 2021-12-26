@@ -1,3 +1,5 @@
+import composeRefs from '@seznam/compose-react-refs'
+
 import {
   Button,
   Dialog,
@@ -6,11 +8,13 @@ import {
   DialogTitle,
   TextField
 } from '@mui/material'
+import { LoadingButton } from '@mui/lab'
 import { useTheme } from '@mui/material/styles'
 
 import AuthenticityTokenField from '/components/application/_authenticity_token_field'
 
 import { Controller as ReactHookFormController, useForm } from 'react-hook-form'
+import useFormSubmitting from '/hooks/use_form_submitting'
 import useStopFormSubmissionOnClientSideValidationFailed from
   '/hooks/use_stop_form_submission_on_client_side_validation_failed'
 
@@ -59,7 +63,9 @@ export default function NewDialogForm(props) {
     },
     'mode': 'onChange'
   })
-  const formRef = useStopFormSubmissionOnClientSideValidationFailed(trigger)
+
+  const useStopFormSubmissionOnClientSideValidationFailedRef =
+    useStopFormSubmissionOnClientSideValidationFailed(trigger)
   const formErrorsPresent = Object.keys(formErrors).length !== 0
 
   const resetFormAfterDialogTransitionEnd = () => setTimeout(() => reset(), theme.transitions.duration.standard)
@@ -68,6 +74,10 @@ export default function NewDialogForm(props) {
 
     if (onDialogClose) onDialogClose(event)
   }
+
+  const [useFormSubmittingRef, submitting] = useFormSubmitting()
+
+  const formRef = composeRefs(useStopFormSubmissionOnClientSideValidationFailedRef, useFormSubmittingRef)
 
   return (
     <div>
@@ -98,7 +108,12 @@ export default function NewDialogForm(props) {
           </DialogContent>
           <DialogActions>
             <Button type="button" onClick={handleDialogClose}>Cancel</Button>
-            <Button type="submit" variant="contained" disabled={formErrorsPresent}>Create</Button>
+            <LoadingButton
+              type="submit"
+              variant="contained"
+              disabled={formErrorsPresent}
+              loading={submitting}
+            >Create</LoadingButton>
           </DialogActions>
         </form>
       </Dialog>

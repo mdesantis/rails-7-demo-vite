@@ -41,7 +41,7 @@ class Admin::SocialAccountsController < AdminController
 
   def destroy
     @social_account.destroy
-    redirect_to social_accounts_url, notice: 'Social Account was successfully destroyed.'
+    redirect_to admin_social_accounts_path, success: 'Social Account was successfully destroyed.'
   end
 
   private

@@ -1,8 +1,14 @@
-import { Fragment, useState } from 'react'
+import { uniqueId } from 'lodash-es'
+import { useState } from 'react'
 
 import Layout from '/components/layouts/admin'
 
 import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
   Grid,
   IconButton,
   Link,
@@ -15,11 +21,24 @@ import {
   Tooltip
 } from '@mui/material'
 
-import { Add as AddIcon, Facebook as FacebookIcon, OpenInNew as OpenInNewIcon } from '@mui/icons-material'
+import { LoadingButton } from '@mui/lab'
 
+import {
+  Add as AddIcon,
+  Delete as DeleteIcon,
+  Facebook as FacebookIcon,
+  OpenInNew as OpenInNewIcon
+} from '@mui/icons-material'
+
+import AuthenticityTokenField from '/components/application/_authenticity_token_field'
 import NewDialogForm from './_new_dialog_form'
 
-import { adminSocialAccountsUrl, newAdminSocialAccountPath, newAdminSocialAccountUrl } from '/routes'
+import {
+  adminSocialAccountPath,
+  adminSocialAccountsUrl,
+  newAdminSocialAccountPath,
+  newAdminSocialAccountUrl
+} from '/routes'
 import { navigator } from '@hotwired/turbo'
 
 function isFacebookSocialAccount(socialAccount) {
@@ -61,6 +80,109 @@ function AppBarButtons(props) {
   )
 }
 
+function DeleteDialog(props) {
+  const { confirmButtonLoading, formId, handleClose, handleConfirm, open } = props
+  let { handleCancel } = props
+
+  if (!handleCancel) handleCancel = handleClose
+
+  return (
+    <Dialog open={open} onClose={handleClose}>
+      <DialogContent>
+        <DialogContentText>
+          Delete this social account?
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleCancel} autoFocus>Nah, fuck it</Button>
+        <LoadingButton
+          onClick={handleConfirm}
+          type="submit"
+          form={formId}
+          loadingPosition="start"
+          startIcon={<DeleteIcon />}
+          loading={confirmButtonLoading}
+          variant="contained"
+        >
+          Come on
+        </LoadingButton>
+      </DialogActions>
+    </Dialog>
+  )
+}
+
+function TableItem(props) {
+  const { socialAccount } = props
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+  const [deleteDialogConfirmButtonLoading, setDeleteDialogConfirmButtonLoading] = useState(false)
+  const [deleteFormId] = useState(uniqueId())
+
+  const handleDeleteDialogOpen = () => setDeleteDialogOpen(true)
+  const handleDeleteDialogClose = () => setDeleteDialogOpen(false)
+
+  const handleDeleteFormSubmit = () => setDeleteDialogConfirmButtonLoading(true)
+
+  return (
+    <>
+      <TableRow>
+        <TableCell rowSpan={2}>
+          <SocialAccountIcon socialAccount={socialAccount} />
+        </TableCell>
+        <TableCell rowSpan={2}>{socialAccount.name}</TableCell>
+        <TableCell size="small" sx={{ 'borderBottom': 0, 'pb': 0.75, 'pl': 2, 'pr': 1, 'pt': 2 }}>
+          App Id
+        </TableCell>
+        <TableCell size="small" sx={{ 'borderBottom': 0, 'pb': 0.75, 'pl': 1, 'pr': 2, 'pt': 2 }}>
+          <code>{socialAccount.credentials.appId}</code>
+        </TableCell>
+        <TableCell rowSpan={2}>
+          <Link
+            href={socialAccountExternalURL(socialAccount)}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Grid container direction="row" alignItems="center">
+              {socialAccountExternalURL(socialAccount)} <OpenInNewIcon fontSize="small" />
+            </Grid>
+          </Link>
+        </TableCell>
+        <TableCell rowSpan={2}>
+          {socialAccount.updatedAt}
+        </TableCell>
+        <TableCell rowSpan={2}>
+          <Tooltip title="Delete this social account">
+            <form
+              method="post"
+              action={adminSocialAccountPath(socialAccount)}
+              id={deleteFormId}
+              onSubmit={handleDeleteFormSubmit}>
+              <AuthenticityTokenField />
+              <input type="hidden" name="_method" value="delete" autoComplete="off" />
+              <IconButton aria-label="delete social account" onClick={handleDeleteDialogOpen}>
+                <DeleteIcon />
+              </IconButton>
+              <DeleteDialog
+                open={deleteDialogOpen}
+                handleClose={handleDeleteDialogClose}
+                formId={deleteFormId}
+                confirmButtonLoading={deleteDialogConfirmButtonLoading}
+              />
+            </form>
+          </Tooltip>
+        </TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell size="small" sx={{ 'pb': 2, 'pl': 2, 'pr': 1, 'pt': 0.75 }}>
+          App Secret
+        </TableCell>
+        <TableCell size="small" sx={{ 'pb': 2, 'pl': 1, 'pr': 2, 'pt': 0.75 }}>
+          <code>{socialAccount.credentials.appSecret}</code>
+        </TableCell>
+      </TableRow>
+    </>
+  )
+}
+
 export default function Index(props) {
   const [newDialogOpen, setNewDialogOpen] = useState(props.newDialogOpen ?? false)
   const { newSocialAccount, successMessage } = props
@@ -91,57 +213,11 @@ export default function Index(props) {
               <TableCell colSpan={2}>Credentials</TableCell>
               <TableCell>External URL</TableCell>
               <TableCell>Last Updated</TableCell>
+              <TableCell></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {props.socialAccounts.map((socialAccount, i) => {
-              return (
-                <Fragment key={i}>
-                  <TableRow>
-                    <TableCell rowSpan={2}>
-                      <SocialAccountIcon socialAccount={socialAccount} />
-                    </TableCell>
-                    <TableCell rowSpan={2}>{socialAccount.name}</TableCell>
-                    <TableCell
-                      size="small"
-                      sx={{ 'borderBottom': 0, 'pb': 0.75, 'pl': 4, 'pr': 2, 'pt': 2 }}
-                    >App Id</TableCell>
-                    <TableCell
-                      size="small"
-                      sx={{ 'borderBottom': 0, 'pb': 0.75, 'pl': 2, 'pr': 4, 'pt': 2 }}
-                    >
-                      <code>{socialAccount.credentials.appId}</code>
-                    </TableCell>
-                    <TableCell rowSpan={2}>
-                      <Link
-                        href={socialAccountExternalURL(socialAccount)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Grid container direction="row" alignItems="center">
-                          {socialAccountExternalURL(socialAccount)} <OpenInNewIcon fontSize="small" />
-                        </Grid>
-                      </Link>
-                    </TableCell>
-                    <TableCell rowSpan={2}>
-                      {socialAccount.updatedAt}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell
-                      size="small"
-                      sx={{ 'pb': 2, 'pl': 4, 'pr': 2, 'pt': 0.75 }}
-                    >App Secret</TableCell>
-                    <TableCell
-                      size="small"
-                      sx={{ 'pb': 2, 'pl': 2, 'pr': 4, 'pt': 0.75 }}
-                    >
-                      <code>{socialAccount.credentials.appSecret}</code>
-                    </TableCell>
-                  </TableRow>
-                </Fragment>
-              )
-            })}
+            {props.socialAccounts.map((socialAccount, i) => <TableItem key={i} socialAccount={socialAccount} />)}
           </TableBody>
         </Table>
       </TableContainer>

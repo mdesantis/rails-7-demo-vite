@@ -3165,7 +3165,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.3.11":
+"postcss@npm:^8.4.5":
   version: 8.4.5
   resolution: "postcss@npm:8.4.5"
   dependencies:
@@ -3460,8 +3460,8 @@ __metadata:
     react: ^17.0.2
     react-dom: ^17.0.2
     react-hook-form: ^7.22.5
-    vite: ^2.7.3
-    vite-plugin-ruby: ^3.0.4
+    vite: ^2.7.7
+    vite-plugin-ruby: ^3.0.5
     water.css: ^2.1.1
   languageName: unknown
   linkType: soft
@@ -3873,25 +3873,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-ruby@npm:^3.0.4":
-  version: 3.0.4
-  resolution: "vite-plugin-ruby@npm:3.0.4"
+"vite-plugin-ruby@npm:^3.0.5":
+  version: 3.0.5
+  resolution: "vite-plugin-ruby@npm:3.0.5"
   dependencies:
     debug: ^4.3.1
     fast-glob: ^3.2.4
   peerDependencies:
     vite: ">=2.5.0"
-  checksum: 090547906c6359a2dde58e6c19ec2429439deeb67e5789b680c1d756cc6b99e0070670e7724894a41be7df84077df4ca5d7294221e8a9a3795c28a09211b4d33
+  checksum: d033e6e251426ac1b6d36300f07f5ba5243d6da847d3aed6c693c00500bf4711829ac2fc7a0326509f8bf7c81f59280c9e4a5c6bc71d3ff27e7fedad44f7317c
   languageName: node
   linkType: hard
 
-"vite@npm:^2.7.3":
-  version: 2.7.3
-  resolution: "vite@npm:2.7.3"
+"vite@npm:^2.7.7":
+  version: 2.7.7
+  resolution: "vite@npm:2.7.7"
   dependencies:
     esbuild: ^0.13.12
     fsevents: ~2.3.2
-    postcss: ^8.3.11
+    postcss: ^8.4.5
     resolve: ^1.20.0
     rollup: ^2.59.0
   peerDependencies:
@@ -3910,7 +3910,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 5db8eb9c3ef609524fad429f836f71978d9b93038d665d9a06f879938f8473b20a68a162ad3b522c98da00369310e82793a6d616e9c9bea7820fa51428c2a390
+  checksum: ce7fd044b9bf29cad6a4ac0505b28d6f75cb461362d678898e78db8ff57763358c35914058c2c563548772fd714713dd8b61248d99759b64ef7576c12cd02401
   languageName: node
   linkType: hard
 

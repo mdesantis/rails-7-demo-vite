@@ -7,6 +7,8 @@ class ApplicationController < ActionController::Base
 
   before_action :handle_latency
 
+  helper_method :server_context
+
   def hello_react
   end
 
@@ -23,5 +25,14 @@ class ApplicationController < ActionController::Base
     latency = latency.to_f
 
     session[:latency] = latency
+  end
+
+  def server_context
+    {
+      currentURL: request.original_url,
+      'i18n.defaultLocale': I18n.default_locale,
+      'i18n.locale': I18n.locale,
+      'rails.env': Rails.env
+    }
   end
 end

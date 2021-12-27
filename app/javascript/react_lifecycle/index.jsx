@@ -2,8 +2,11 @@ import ReactDOM from 'react-dom'
 
 import { StrictMode } from 'react'
 
+import { ServerContextWrapper } from './server_context'
+
 export default class ReactLifecycle {
   constructor(options) {
+    this.includeServerContext = options.includeServerContext
     this.strictMode = options.strictMode
 
     this.componentsEagerGlobImport = import.meta.globEager('/components/**/*.jsx')
@@ -30,12 +33,22 @@ export default class ReactLifecycle {
 
       const Component = eagerImport.default
 
-      if (this.strictMode) {
-        ReactDOM.render(<StrictMode><Component {...props} /></StrictMode>, containerElement)
-      } else {
-        ReactDOM.render(<Component {...props} />, containerElement)
-      }
+      this.render(Component, props, containerElement)
     })
+  }
+
+  render(Component, props, containerElement) {
+    if (this.strictMode && this.includeServerContext) {
+      ReactDOM.render(
+        <StrictMode><ServerContextWrapper><Component {...props} /></ServerContextWrapper></StrictMode>, containerElement
+      )
+    } else if (this.strictMode) {
+      ReactDOM.render(<StrictMode><Component {...props} /></StrictMode>, containerElement)
+    } else if (this.includeServerContext) {
+      ReactDOM.render(<ServerContextWrapper><Component {...props} /></ServerContextWrapper>, containerElement)
+    } else {
+      ReactDOM.render(<Component {...props} />, containerElement)
+    }
   }
 
   unmountComponents() {
@@ -54,18 +67,34 @@ export default class ReactLifecycle {
     this.mountComponents()
   }
 
+  fetchServerContext() {
+    if (!this.includeServerContext) return
+
+    const element = document.getElementById('server-context')
+    this.serverContext = JSON.parse(element.textContent)
+  }
+
+  mount() {
+    this.fetchServerContext()
+    this.mountComponents()
+  }
+
+  unmount() {
+    this.unmountComponents()
+  }
+
   start() {
     document.addEventListener('turbo:render', () => {
-      this.mountComponents()
+      this.mount()
     })
     document.addEventListener('turbo:before-render', () => {
-      this.unmountComponents()
+      this.unmount()
     })
     // Reset React components after Turbo cache restoring in order to prevent issues with dirty cache
     window.addEventListener('popstate', (e) => {
       this.resetComponentsAfterTurboPageCacheRestoring(e)
     })
-    this.mountComponents()
+    this.mount()
   }
 
   initialize() {

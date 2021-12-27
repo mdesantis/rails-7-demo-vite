@@ -1,3 +1,3 @@
 import ReactLifecycle from '/react_lifecycle'
 
-new ReactLifecycle({ 'strictMode': true }).initialize()
+new ReactLifecycle({ 'includeServerContext': true, 'strictMode': true }).initialize()

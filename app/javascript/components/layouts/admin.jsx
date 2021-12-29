@@ -1,4 +1,3 @@
-
 import { useMemo, useState } from 'react'
 
 import { StyledEngineProvider, ThemeProvider, createTheme } from '@mui/material/styles'
@@ -25,8 +24,8 @@ function SuccessSnackbar(props) {
     setOpen(false)
   }
   return (
-    <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ horizontal, vertical }}>
-      <Alert onClose={handleClose} severity="success" sx={{ 'width': '100%' }}>{message}</Alert>
+    <Snackbar open={open} autoHideDuration={4000} onClose={handleClose} anchorOrigin={{ horizontal, vertical }}>
+      <Alert onClose={handleClose} severity="success">{message}</Alert>
     </Snackbar>
   )
 }

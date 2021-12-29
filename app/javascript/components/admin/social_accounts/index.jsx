@@ -2,6 +2,7 @@ import { uniqueId } from 'lodash-es'
 import { useState } from 'react'
 
 import Layout from '/components/layouts/admin'
+import ServerContext from '/react_lifecycle/server_context'
 
 import {
   Button,
@@ -161,14 +162,14 @@ function TableItem(props) {
               <IconButton aria-label="delete social account" onClick={handleDeleteDialogOpen}>
                 <DeleteIcon />
               </IconButton>
-              <DeleteDialog
-                open={deleteDialogOpen}
-                handleClose={handleDeleteDialogClose}
-                formId={deleteFormId}
-                confirmButtonLoading={deleteDialogConfirmButtonLoading}
-              />
             </form>
           </Tooltip>
+          <DeleteDialog
+            open={deleteDialogOpen}
+            handleClose={handleDeleteDialogClose}
+            formId={deleteFormId}
+            confirmButtonLoading={deleteDialogConfirmButtonLoading}
+          />
         </TableCell>
       </TableRow>
       <TableRow>
@@ -187,40 +188,58 @@ export default function Index(props) {
   const [newDialogOpen, setNewDialogOpen] = useState(props.newDialogOpen ?? false)
   const { newSocialAccount, successMessage } = props
 
-  const handleOnNewDialogClose = () => {
+  const handleOnNewDialogClose = (setServerContext) => {
+    const currentURL = new URL(adminSocialAccountsUrl())
     setNewDialogOpen(false)
-    navigator.history.push(new URL(adminSocialAccountsUrl()))
+    navigator.history.push(currentURL)
+    setServerContext((state) => {
+      return { ...state, 'currentURL': currentURL.toString() }
+    })
   }
 
-  const handleOnNewDialogOpen = () => {
+  const handleOnNewDialogOpen = (setServerContext) => {
+    const currentURL = new URL(newAdminSocialAccountUrl())
     setNewDialogOpen(true)
-    navigator.history.push(new URL(newAdminSocialAccountUrl()))
+    navigator.history.push(currentURL)
+    setServerContext((state) => {
+      return { ...state, 'currentURL': currentURL.toString() }
+    })
   }
 
   return (
-    <Layout
-      appBarTitle="Social Accounts"
-      appBarButtons={<AppBarButtons handleNewDialogOpen={() => handleOnNewDialogOpen()} />}
-      successMessage={successMessage}
-    >
-      <NewDialogForm open={newDialogOpen} onClose={() => handleOnNewDialogClose()} socialAccount={newSocialAccount} />
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell></TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell colSpan={2}>Credentials</TableCell>
-              <TableCell>External URL</TableCell>
-              <TableCell>Last Updated</TableCell>
-              <TableCell></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {props.socialAccounts.map((socialAccount, i) => <TableItem key={i} socialAccount={socialAccount} />)}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Layout>
+    <ServerContext.Consumer>
+      {({ setServerContext }) => {
+        return (
+          <Layout
+            appBarTitle="Social Accounts"
+            appBarButtons={<AppBarButtons handleNewDialogOpen={() => handleOnNewDialogOpen(setServerContext)} />}
+            successMessage={successMessage}
+          >
+            <NewDialogForm
+              open={newDialogOpen}
+              onClose={() => handleOnNewDialogClose(setServerContext)}
+              socialAccount={newSocialAccount}
+            />
+            <TableContainer>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell></TableCell>
+                    <TableCell>Name</TableCell>
+                    <TableCell colSpan={2}>Credentials</TableCell>
+                    <TableCell>External URL</TableCell>
+                    <TableCell>Last Updated</TableCell>
+                    <TableCell></TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {props.socialAccounts.map((socialAccount, i) => <TableItem key={i} socialAccount={socialAccount} />)}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Layout>
+        )
+      }}
+    </ServerContext.Consumer>
   )
 }

@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "es5",
+    "lib": [
+      "es6",
+      "dom"
+    ],
+    "jsx": "react",
+    "module": "es6",
+    "paths": {
+      "*": [
+        "node_modules/*"
+      ],
+      "/*": [
+        "app/javascript/*"
+      ],
+      "@/*": [
+        "app/javascript/*"
+      ]
+    },
+  },
+  "exclude": [
+    "node_modules",
+    "public"
+  ]
+}

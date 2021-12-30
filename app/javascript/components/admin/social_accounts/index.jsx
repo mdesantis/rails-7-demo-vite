@@ -5,6 +5,7 @@ import Layout from '/components/layouts/admin'
 import ServerContext from '/react_lifecycle/server_context'
 
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
@@ -13,6 +14,7 @@ import {
   Grid,
   IconButton,
   Link,
+  Stack,
   Table,
   TableBody,
   TableCell,
@@ -27,6 +29,7 @@ import { LoadingButton } from '@mui/lab'
 import {
   Add as AddIcon,
   Delete as DeleteIcon,
+  Edit as EditIcon,
   Facebook as FacebookIcon,
   OpenInNew as OpenInNewIcon
 } from '@mui/icons-material'
@@ -37,6 +40,7 @@ import NewDialogForm from './_new_dialog_form'
 import {
   adminSocialAccountPath,
   adminSocialAccountsUrl,
+  editAdminSocialAccountPath,
   newAdminSocialAccountPath,
   newAdminSocialAccountUrl
 } from '/routes'
@@ -71,12 +75,15 @@ function AppBarButtons(props) {
   }
 
   return (
-    <Tooltip title="New Social Account">
-      <Link href={newAdminSocialAccountPath()} onClick={(e) => handleNewLinkClick(e)}>
-        <IconButton aria-label="new social account">
-          <AddIcon fontSize="large" />
-        </IconButton>
-      </Link>
+    <Tooltip title="New social account">
+      <IconButton
+        component="a"
+        href={newAdminSocialAccountPath()}
+        onClick={(e) => handleNewLinkClick(e)}
+        aria-label="new social account"
+      >
+        <AddIcon fontSize="large" />
+      </IconButton>
     </Tooltip>
   )
 }
@@ -112,17 +119,54 @@ function DeleteDialog(props) {
   )
 }
 
-function TableItem(props) {
-  const { socialAccount } = props
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
-  const [deleteDialogConfirmButtonLoading, setDeleteDialogConfirmButtonLoading] = useState(false)
-  const [deleteFormId] = useState(uniqueId())
+function EditAction({ socialAccount }) {
+  return (
+    <Tooltip title="Edit this social account">
+      <IconButton component="a" href={editAdminSocialAccountPath(socialAccount)} aria-label="edit social account">
+        <EditIcon />
+      </IconButton>
+    </Tooltip>
+  )
+}
 
-  const handleDeleteDialogOpen = () => setDeleteDialogOpen(true)
-  const handleDeleteDialogClose = () => setDeleteDialogOpen(false)
+function DeleteAction({ socialAccount }) {
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const [dialogConfirmButtonLoading, setDialogConfirmButtonLoading] = useState(false)
+  const [formId] = useState(uniqueId())
 
-  const handleDeleteFormSubmit = () => setDeleteDialogConfirmButtonLoading(true)
+  const handleDialogOpen = () => setDialogOpen(true)
+  const handleDialogClose = () => setDialogOpen(false)
+  const handleFormSubmit = () => setDialogConfirmButtonLoading(true)
 
+  return (
+    <>
+      <Tooltip title="Delete this social account">
+        <Box
+          component="form"
+          sx={{ 'display': 'inline' }}
+          method="post"
+          action={adminSocialAccountPath(socialAccount)}
+          id={formId}
+          onSubmit={handleFormSubmit}
+        >
+          <AuthenticityTokenField />
+          <input type="hidden" name="_method" value="delete" autoComplete="off" />
+          <IconButton aria-label="delete social account" onClick={handleDialogOpen}>
+            <DeleteIcon />
+          </IconButton>
+        </Box>
+      </Tooltip>
+      <DeleteDialog
+        open={dialogOpen}
+        handleClose={handleDialogClose}
+        formId={formId}
+        confirmButtonLoading={dialogConfirmButtonLoading}
+      />
+    </>
+  )
+}
+
+function TableItem({ socialAccount }) {
   return (
     <>
       <TableRow>
@@ -151,25 +195,10 @@ function TableItem(props) {
           {socialAccount.updatedAt}
         </TableCell>
         <TableCell rowSpan={2}>
-          <Tooltip title="Delete this social account">
-            <form
-              method="post"
-              action={adminSocialAccountPath(socialAccount)}
-              id={deleteFormId}
-              onSubmit={handleDeleteFormSubmit}>
-              <AuthenticityTokenField />
-              <input type="hidden" name="_method" value="delete" autoComplete="off" />
-              <IconButton aria-label="delete social account" onClick={handleDeleteDialogOpen}>
-                <DeleteIcon />
-              </IconButton>
-            </form>
-          </Tooltip>
-          <DeleteDialog
-            open={deleteDialogOpen}
-            handleClose={handleDeleteDialogClose}
-            formId={deleteFormId}
-            confirmButtonLoading={deleteDialogConfirmButtonLoading}
-          />
+          <Stack direction="row" spacing={1}>
+            <EditAction socialAccount={socialAccount} />
+            <DeleteAction socialAccount={socialAccount} />
+          </Stack>
         </TableCell>
       </TableRow>
       <TableRow>
@@ -184,26 +213,27 @@ function TableItem(props) {
   )
 }
 
-export default function Index(props) {
-  const [newDialogOpen, setNewDialogOpen] = useState(props.newDialogOpen ?? false)
-  const { newSocialAccount, successMessage } = props
+function changeURL(currentURL, setServerContext) {
+  navigator.history.push(currentURL)
+
+  setServerContext((state) => {
+    return { ...state, 'currentURL': currentURL.toString() }
+  })
+}
+
+export default function Index(
+  { 'newDialogOpen': initialNewDialogOpen, newSocialAccount, socialAccounts, successMessage }
+) {
+  const [newDialogOpen, setNewDialogOpen] = useState(initialNewDialogOpen ?? false)
 
   const handleOnNewDialogClose = (setServerContext) => {
-    const currentURL = new URL(adminSocialAccountsUrl())
     setNewDialogOpen(false)
-    navigator.history.push(currentURL)
-    setServerContext((state) => {
-      return { ...state, 'currentURL': currentURL.toString() }
-    })
+    changeURL(new URL(adminSocialAccountsUrl()), setServerContext)
   }
 
   const handleOnNewDialogOpen = (setServerContext) => {
-    const currentURL = new URL(newAdminSocialAccountUrl())
     setNewDialogOpen(true)
-    navigator.history.push(currentURL)
-    setServerContext((state) => {
-      return { ...state, 'currentURL': currentURL.toString() }
-    })
+    changeURL(new URL(newAdminSocialAccountUrl()), setServerContext)
   }
 
   return (
@@ -233,7 +263,7 @@ export default function Index(props) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {props.socialAccounts.map((socialAccount, i) => <TableItem key={i} socialAccount={socialAccount} />)}
+                  {socialAccounts.map((socialAccount, i) => <TableItem key={i} socialAccount={socialAccount} />)}
                 </TableBody>
               </Table>
             </TableContainer>

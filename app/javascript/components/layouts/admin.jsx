@@ -47,7 +47,7 @@ export default function Admin(props) {
       <ThemeProvider theme={theme}>
         <CssBaseline enableColorScheme />
         <Drawer appBarTitle={props.appBarTitle} appBarButtons={props.appBarButtons}>
-          <Container>
+          <Container maxWidth="xl">
             {props.children}
           </Container>
         </Drawer>

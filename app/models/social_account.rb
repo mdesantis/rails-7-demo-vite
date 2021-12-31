@@ -6,4 +6,5 @@ class SocialAccount < ApplicationRecord
   enum :type, TYPES.index_by(&:to_sym), scopes: false
 
   validates :name, :type, presence: true
+  validates :name, uniqueness: true
 end

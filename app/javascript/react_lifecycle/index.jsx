@@ -4,6 +4,8 @@ import { StrictMode } from 'react'
 
 import { ServerContextWrapper } from './server_context'
 
+import { session } from '@hotwired/turbo'
+
 export default class ReactLifecycle {
   constructor(options) {
     this.includeServerContext = options.includeServerContext
@@ -14,6 +16,10 @@ export default class ReactLifecycle {
 
   componentMountElements() {
     return document.getElementsByClassName('react-component-mount')
+  }
+
+  fetchActionElements(newBodyElement) {
+    return newBodyElement.getElementsByClassName('react-action')
   }
 
   mountComponents() {
@@ -83,16 +89,52 @@ export default class ReactLifecycle {
     this.unmountComponents()
   }
 
+  dispatchActions(elements) {
+    Array.from(elements).forEach((element) => {
+      const updatedData = JSON.parse(element.textContent)
+      const event = new CustomEvent('reactAction', { 'detail': updatedData })
+
+      document.dispatchEvent(event)
+      element.remove()
+    })
+  }
+
+  setActionElements(newBodyElement) {
+    this.actionElements = this.fetchActionElements(newBodyElement)
+  }
+
+  cancelCurrentTurboRender() {
+    const { view } = session
+
+    // Implementation copied from: https://github.com/hotwired/turbo/blob/201f8b3260bfbc15635d24c9961ff027747fb046/src/core/view.ts#L88-L90
+    delete view.renderer
+    // eslint-disable-next-line no-undefined
+    view.resolveRenderPromise(undefined)
+    delete view.renderPromise
+  }
+
   start() {
     document.addEventListener('turbo:render', () => {
       this.mount()
     })
-    document.addEventListener('turbo:before-render', () => {
-      this.unmount()
+    document.addEventListener('turbo:before-render', (event) => {
+      event.preventDefault()
+
+      const actionElements = this.fetchActionElements(event.detail.newBody)
+
+      if (actionElements.length === 0) {
+        event.detail.resume()
+        this.unmount()
+      } else {
+        // Turbo doesn't support officially render canceling, but we need it because otherwise the current rendering
+        // remains as stale and its dirty state creates issues on next renderings.
+        this.cancelCurrentTurboRender()
+        this.dispatchActions(actionElements)
+      }
     })
     // Reset React components after Turbo cache restoring in order to prevent issues with dirty cache
-    window.addEventListener('popstate', (e) => {
-      this.resetComponentsAfterTurboPageCacheRestoring(e)
+    window.addEventListener('popstate', (event) => {
+      this.resetComponentsAfterTurboPageCacheRestoring(event)
     })
     this.mount()
   }

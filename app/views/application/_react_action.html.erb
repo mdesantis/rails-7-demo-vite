@@ -1,6 +1,7 @@
+<% action = action.is_a?(String) ? action : action.to_json.html_safe %>
 <script
   type="application/json"
   class="react-action"
 >
-  <%= raw action %>
+  <%= action %>
 </script>

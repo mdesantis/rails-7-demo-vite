@@ -4,7 +4,6 @@ class Admin::SocialAccountsController < AdminController
   before_action :set_social_accounts, only: %i[index new]
   before_action :set_social_account, only: %i[show edit update destroy]
   before_action :set_new_social_account, only: %i[index new]
-  before_action :set_props, only: %i[index show new edit]
 
   def index
   end
@@ -25,7 +24,6 @@ class Admin::SocialAccountsController < AdminController
       redirect_to admin_social_accounts_path, success: 'Social Account was successfully created.'
     else
       set_social_accounts
-      @props = render_to_string :new, formats: :json
       render :new, status: :unprocessable_entity
     end
   end
@@ -34,7 +32,6 @@ class Admin::SocialAccountsController < AdminController
     if @social_account.update(social_account_params)
       redirect_to @social_account, notice: 'Social Account was successfully updated.'
     else
-      @props = render_to_string :edit, formats: :json
       render :edit, status: :unprocessable_entity
     end
   end

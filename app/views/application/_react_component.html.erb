@@ -1,5 +1,5 @@
 <% props ||= {} %>
-<% props = props.is_a?(String) ? props : props.to_json %>
+<% props = props.is_a?(String) ? props : props.to_json.html_safe %>
 <% container_element_id = SecureRandom.uuid %>
 <script
   type="application/json"
@@ -7,6 +7,6 @@
   data-component-path="<%= path %>"
   data-container-element-id="<%= container_element_id %>"
 >
-  <%= raw props %>
+  <%= props %>
 </script>
 <div id="<%= container_element_id %>"></div>

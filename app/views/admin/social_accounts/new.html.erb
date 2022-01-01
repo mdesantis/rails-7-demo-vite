@@ -1,15 +1,13 @@
-<%= render 'react_component', path: 'admin/social_accounts/new', props: @props %>
+<%= render 'react_component',
+  path: 'admin/social_accounts/new',
+  props: raw(render_json template: 'admin/social_accounts/new')
+%>
 
 <% if @social_account.errors.present? %>
-  <%
-  action = raw(
-    render(
+  <%= render 'react_action',
+    action: raw(render_json(
       partial: 'admin/social_accounts/form_add_errors_action',
-      handlers: [:jbuilder],
-      formats: [:json],
       locals: { social_account: @social_account }
-    )
-  )
+    ))
   %>
-  <%= render 'react_action', action: action %>
 <% end %>

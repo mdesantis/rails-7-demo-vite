@@ -1,4 +1,10 @@
+import { Controller as ReactHookFormController, useForm } from 'react-hook-form'
 import composeRefs from '@seznam/compose-react-refs'
+import { useEffect } from 'react'
+
+import useFormSubmitting from '/hooks/use_form_submitting'
+import useStopFormSubmissionOnClientSideValidationFailed from
+  '/hooks/use_stop_form_submission_on_client_side_validation_failed'
 
 import {
   Button,
@@ -11,11 +17,6 @@ import {
 import { LoadingButton } from '@mui/lab'
 
 import AuthenticityTokenField from '/components/application/_authenticity_token_field'
-
-import { Controller as ReactHookFormController, useForm } from 'react-hook-form'
-import useFormSubmitting from '/hooks/use_form_submitting'
-import useStopFormSubmissionOnClientSideValidationFailed from
-  '/hooks/use_stop_form_submission_on_client_side_validation_failed'
 
 import { adminSocialAccountsPath } from '/routes'
 
@@ -51,10 +52,30 @@ function FormController(props) {
   )
 }
 
+function useHandleReactActionChangeAddErrors(setError) {
+  useEffect(() => {
+    const handleReactActionChange = ({ 'detail': { payload, type } }) => {
+      if (type !== 'social_account_form_add_errors') return
+
+      const errors = payload
+
+      errors.forEach(({ 'attribute': errorAttribute, 'type': errorType }) => {
+        if (errorAttribute === 'name' && errorType === 'taken') {
+          setError('social_account[name]', { 'message': 'You suck at naming stuff', 'type': 'taken' })
+        }
+      })
+    }
+
+    document.addEventListener('reactAction', handleReactActionChange)
+
+    return () => document.removeEventListener('reactAction', handleReactActionChange)
+  }, [setError])
+}
+
 function Form(props) {
   const { onDialogClose, socialAccount } = props
 
-  const { control, 'formState': { 'errors': formErrors }, trigger } = useForm({
+  const { control, 'formState': { 'errors': formErrors }, setError, trigger } = useForm({
     'defaultValues': {
       'social_account[app_id]': socialAccount.credentials?.appId ?? '',
       'social_account[app_secret]': socialAccount.credentials?.appSecret ?? '',
@@ -70,6 +91,8 @@ function Form(props) {
   const [useFormSubmittingRef, submitting] = useFormSubmitting()
 
   const formRef = composeRefs(useStopFormSubmissionOnClientSideValidationFailedRef, useFormSubmittingRef)
+
+  useHandleReactActionChangeAddErrors(setError)
 
   return (
     <form action={adminSocialAccountsPath()} ref={formRef} acceptCharset="utf-8" method="post" data-remote>

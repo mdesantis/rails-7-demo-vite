@@ -1,1 +1,1 @@
-const _initiators = import.meta.globEager('../initiators/admin/**/*.{js,jsx}')
+const _initiators = import.meta.globEager('/initiators/admin/**/*.{js,jsx}')

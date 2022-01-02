@@ -22,11 +22,23 @@ export default class TurboReact {
     return newBodyElement.getElementsByClassName('react-action')
   }
 
+  parseJSONElementContent(content, elementId) {
+    try {
+      return JSON.parse(content)
+    } catch (error) {
+      if (!(error instanceof SyntaxError)) throw error
+      throw new Error(
+        `the element with id ${elementId} does not contain valid JSON. Original error message: \n` +
+        `${error.name}: ${error.message}`
+      )
+    }
+  }
+
   mountComponents() {
     Array.from(this.componentMountElements()).forEach((element) => {
       const { componentPath, containerElementId } = element.dataset
       const containerElement = document.getElementById(containerElementId)
-      const props = JSON.parse(element.textContent)
+      const props = this.parseJSONElementContent(element.textContent, containerElementId)
       const fullComponentPath = `/components/${componentPath}.jsx`
       const eagerImport = this.componentsEagerGlobImport[fullComponentPath]
 

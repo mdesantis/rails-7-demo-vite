@@ -2,7 +2,7 @@ import { uniqueId } from 'lodash-es'
 import { useState } from 'react'
 
 import Layout from '/components/layouts/admin'
-import ServerContext from '/react_lifecycle/server_context'
+import ServerContext from '/turbo_react/server_context'
 
 import {
   Box,

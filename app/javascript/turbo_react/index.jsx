@@ -6,7 +6,7 @@ import { ServerContextWrapper } from './server_context'
 
 import { session } from '@hotwired/turbo'
 
-export default class ReactLifecycle {
+export default class TurboReact {
   constructor(options) {
     this.includeServerContext = options.includeServerContext
     this.strictMode = options.strictMode

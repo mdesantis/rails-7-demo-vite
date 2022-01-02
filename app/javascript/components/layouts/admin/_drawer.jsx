@@ -2,7 +2,7 @@
 // - https://mui.com/components/drawers/#clipped-under-the-app-bar
 // - https://github.com/mui-org/material-ui/blob/v5.2.5/docs/src/pages/components/drawers/ClippedDrawer.js
 
-import ServerContext from '/react_lifecycle/server_context'
+import ServerContext from '/turbo_react/server_context'
 
 import {
   AppBar,

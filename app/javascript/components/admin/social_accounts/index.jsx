@@ -35,12 +35,13 @@ import {
 } from '@mui/icons-material'
 
 import AuthenticityTokenField from '/components/application/_authenticity_token_field'
-import NewDialogForm from './_new_dialog_form'
+import DialogForm from './_dialog_form'
 
 import {
   adminSocialAccountPath,
   adminSocialAccountsUrl,
   editAdminSocialAccountPath,
+  editAdminSocialAccountUrl,
   newAdminSocialAccountPath,
   newAdminSocialAccountUrl
 } from '/routes'
@@ -56,22 +57,24 @@ function socialAccountExternalURL(socialAccount) {
   return null
 }
 
-function SocialAccountIcon(props) {
-  const { socialAccount } = props
+function changeURL(currentURL, setServerContext) {
+  navigator.history.push(currentURL)
 
+  setServerContext((state) => {
+    return { ...state, 'currentURL': currentURL.toString() }
+  })
+}
+
+function SocialAccountIcon({ socialAccount }) {
   if (isFacebookSocialAccount(socialAccount)) return <FacebookIcon titleAccess="Facebook" />
 
   return null
 }
 
-function AppBarButtons(props) {
-  const { handleNewDialogOpen } = props
-
-  const handleNewLinkClick = (event) => {
-    if (handleNewDialogOpen) {
-      event.preventDefault()
-      handleNewDialogOpen()
-    }
+function AppBarButtons({ handleDialogFormOpen }) {
+  const handleButtonClick = (event) => {
+    event.preventDefault()
+    handleDialogFormOpen()
   }
 
   return (
@@ -79,7 +82,7 @@ function AppBarButtons(props) {
       <IconButton
         component="a"
         href={newAdminSocialAccountPath()}
-        onClick={(e) => handleNewLinkClick(e)}
+        onClick={(e) => handleButtonClick(e)}
         aria-label="new social account"
       >
         <AddIcon fontSize="large" />
@@ -119,10 +122,20 @@ function DeleteDialog(props) {
   )
 }
 
-function EditAction({ socialAccount }) {
+function EditAction({ handleDialogFormOpen, socialAccount }) {
+  const handleButtonClick = (event) => {
+    event.preventDefault()
+    handleDialogFormOpen()
+  }
+
   return (
     <Tooltip title="Edit this social account">
-      <IconButton component="a" href={editAdminSocialAccountPath(socialAccount)} aria-label="edit social account">
+      <IconButton
+        component="a"
+        href={editAdminSocialAccountPath(socialAccount)}
+        aria-label="edit social account"
+        onClick={(e) => handleButtonClick(e)}
+      >
         <EditIcon />
       </IconButton>
     </Tooltip>
@@ -166,7 +179,7 @@ function DeleteAction({ socialAccount }) {
   )
 }
 
-function TableItem({ socialAccount }) {
+function TableItem({ handleDialogFormOpen, socialAccount }) {
   return (
     <>
       <TableRow>
@@ -196,7 +209,7 @@ function TableItem({ socialAccount }) {
         </TableCell>
         <TableCell rowSpan={2}>
           <Stack direction="row" spacing={1}>
-            <EditAction socialAccount={socialAccount} />
+            <EditAction socialAccount={socialAccount} handleDialogFormOpen={handleDialogFormOpen} />
             <DeleteAction socialAccount={socialAccount} />
           </Stack>
         </TableCell>
@@ -213,27 +226,26 @@ function TableItem({ socialAccount }) {
   )
 }
 
-function changeURL(currentURL, setServerContext) {
-  navigator.history.push(currentURL)
-
-  setServerContext((state) => {
-    return { ...state, 'currentURL': currentURL.toString() }
-  })
-}
-
 export default function Index(
-  { 'newDialogOpen': initialNewDialogOpen, newSocialAccount, socialAccounts, successMessage }
+  {
+    'dialogFormOpen': initialDialogFormOpen,
+    'formSocialAccount': initialFormSocialAccount,
+    socialAccounts,
+    successMessage
+  }
 ) {
-  const [newDialogOpen, setNewDialogOpen] = useState(initialNewDialogOpen ?? false)
+  const [dialogFormOpen, setDialogFormOpen] = useState(initialDialogFormOpen ?? false)
+  const [formSocialAccount, setFormSocialAccount] = useState(initialFormSocialAccount)
 
-  const handleOnNewDialogClose = (setServerContext) => {
-    setNewDialogOpen(false)
+  const handleOnDialogFormClose = (setServerContext) => {
+    setDialogFormOpen(false)
     changeURL(new URL(adminSocialAccountsUrl()), setServerContext)
   }
 
-  const handleOnNewDialogOpen = (setServerContext) => {
-    setNewDialogOpen(true)
-    changeURL(new URL(newAdminSocialAccountUrl()), setServerContext)
+  const handleOnDialogFormOpen = (setServerContext, url, socialAccount) => {
+    setDialogFormOpen(true)
+    if (socialAccount) setFormSocialAccount(socialAccount)
+    changeURL(url, setServerContext)
   }
 
   return (
@@ -242,13 +254,19 @@ export default function Index(
         return (
           <Layout
             appBarTitle="Social Accounts"
-            appBarButtons={<AppBarButtons handleNewDialogOpen={() => handleOnNewDialogOpen(setServerContext)} />}
+            appBarButtons={
+              <AppBarButtons
+                handleDialogFormOpen={
+                  () => handleOnDialogFormOpen(setServerContext, new URL(newAdminSocialAccountUrl()))
+                }
+              />
+            }
             successMessage={successMessage}
           >
-            <NewDialogForm
-              open={newDialogOpen}
-              onClose={() => handleOnNewDialogClose(setServerContext)}
-              socialAccount={newSocialAccount}
+            <DialogForm
+              open={dialogFormOpen}
+              onClose={() => handleOnDialogFormClose(setServerContext)}
+              socialAccount={formSocialAccount}
             />
             <TableContainer>
               <Table>
@@ -263,7 +281,21 @@ export default function Index(
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {socialAccounts.map((socialAccount, i) => <TableItem key={i} socialAccount={socialAccount} />)}
+                  {socialAccounts.map((socialAccount, i) => {
+                    return (
+                      <TableItem
+                        key={i}
+                        socialAccount={socialAccount}
+                        handleDialogFormOpen={
+                          () => handleOnDialogFormOpen(
+                            setServerContext,
+                            new URL(editAdminSocialAccountUrl(socialAccount)),
+                            socialAccount
+                          )
+                        }
+                      />
+                    )
+                  })}
                 </TableBody>
               </Table>
             </TableContainer>

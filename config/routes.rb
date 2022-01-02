@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get 'hello_react_2' => 'application#hello_react_2'
 
   namespace :admin do
-    resources :social_accounts, path: 'social-accounts'
+    resources :social_accounts, path: 'social-accounts', except: %i[show]
   end
 
   # Defines the root path route ("/")

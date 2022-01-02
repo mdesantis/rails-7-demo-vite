@@ -1,14 +1,11 @@
 # frozen_string_literal: true
 
 class Admin::SocialAccountsController < AdminController
-  before_action :set_social_accounts, only: %i[index new]
-  before_action :set_social_account, only: %i[show edit update destroy]
+  before_action :set_social_accounts, only: %i[index new edit]
+  before_action :set_social_account, only: %i[edit update destroy]
   before_action :set_new_social_account, only: %i[index new]
 
   def index
-  end
-
-  def show
   end
 
   def new
@@ -30,7 +27,7 @@ class Admin::SocialAccountsController < AdminController
 
   def update
     if @social_account.update(social_account_params)
-      redirect_to @social_account, notice: 'Social Account was successfully updated.'
+      redirect_to admin_social_accounts_path, success: 'Social Account was successfully updated.'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -53,10 +50,6 @@ class Admin::SocialAccountsController < AdminController
 
   def set_new_social_account
     @social_account = SocialAccount::Facebook.new
-  end
-
-  def set_props
-    @props = render_to_string formats: :json
   end
 
   def social_account_params

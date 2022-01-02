@@ -18,7 +18,7 @@ import { LoadingButton } from '@mui/lab'
 
 import AuthenticityTokenField from '/components/application/_authenticity_token_field'
 
-import { adminSocialAccountsPath } from '/routes'
+import { adminSocialAccountPath, adminSocialAccountsPath } from '/routes'
 
 function FormController(props) {
   const { control, defaultValue, inputName, label, name, rules } = props
@@ -74,6 +74,8 @@ function useHandleReactActionChangeAddErrors(setError) {
 
 function Form(props) {
   const { onDialogClose, socialAccount } = props
+  const newRecord = !socialAccount.id
+  const formAction = newRecord ? adminSocialAccountsPath() : adminSocialAccountPath(socialAccount)
 
   const { control, 'formState': { 'errors': formErrors }, setError, trigger } = useForm({
     'defaultValues': {
@@ -95,9 +97,10 @@ function Form(props) {
   useHandleReactActionChangeAddErrors(setError)
 
   return (
-    <form action={adminSocialAccountsPath()} ref={formRef} acceptCharset="utf-8" method="post" data-remote>
+    <form action={formAction} ref={formRef} acceptCharset="utf-8" method="post" data-remote>
+      {newRecord || <input type="hidden" name="_method" value="patch" autoComplete="off" />}
       <AuthenticityTokenField />
-      <DialogTitle>New Social Account</DialogTitle>
+      <DialogTitle>{newRecord ? 'New Social Account' : 'Edit Social Account'}</DialogTitle>
       <DialogContent>
         <input type="hidden" name="social_account[type]" value={socialAccount.type} />
         <FormController
@@ -123,13 +126,13 @@ function Form(props) {
           variant="contained"
           disabled={formErrorsPresent}
           loading={submitting}
-        >Create</LoadingButton>
+        >{newRecord ? 'Create' : 'Update'}</LoadingButton>
       </DialogActions>
     </form>
   )
 }
 
-export default function NewDialogForm(props) {
+export default function DialogForm(props) {
   const { 'onClose': onDialogClose, 'open': dialogOpen, socialAccount } = props
 
   return (

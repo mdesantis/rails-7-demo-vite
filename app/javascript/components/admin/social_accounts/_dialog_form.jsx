@@ -2,6 +2,7 @@ import { Controller as ReactHookFormController, useForm } from 'react-hook-form'
 import composeRefs from '@seznam/compose-react-refs'
 import { useEffect } from 'react'
 
+import isBlank from '/utils/is_blank'
 import useFormSubmitting from '/hooks/use_form_submitting'
 import useStopFormSubmissionOnClientSideValidationFailed from
   '/hooks/use_stop_form_submission_on_client_side_validation_failed'
@@ -107,17 +108,17 @@ function Form(props) {
           control={control}
           name="social_account[name]"
           label="Name *"
-          rules={{ 'required': 'Please insert a damn name' }} />
+          rules={{ 'validate': (value) => !isBlank(value) || 'Please insert a damn name' }} />
         <FormController
           control={control}
           name="social_account[app_id]"
           label="Facebook App Id *"
-          rules={{ 'required': 'Please insert a bloody Facebook App Id' }} />
+          rules={{ 'validate': (value) => !isBlank(value) || 'Please insert a bloody Facebook App Id' }} />
         <FormController
           control={control}
           name="social_account[app_secret]"
           label="Facebook App Secret *"
-          rules={{ 'required': 'Please insert a motherfucking Facebook App Secret' }} />
+          rules={{ 'validate': (value) => !isBlank(value) || 'Please insert a motherfucking Facebook App Secret' }} />
       </DialogContent>
       <DialogActions>
         <Button type="button" onClick={onDialogClose}>Cancel</Button>

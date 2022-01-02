@@ -129,6 +129,8 @@ function Form(props) {
           loading={submitting}
         >{newRecord ? 'Create' : 'Update'}</LoadingButton>
       </DialogActions>
+      <input type="hidden" name="social_account[handled_errors][][attribute]" value="name" />
+      <input type="hidden" name="social_account[handled_errors][][type]" value="taken" />
     </form>
   )
 }

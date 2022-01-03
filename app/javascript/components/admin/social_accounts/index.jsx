@@ -59,12 +59,14 @@ function socialAccountExternalURL(socialAccount) {
   return null
 }
 
-function changeURL(currentURL, setServerContext) {
-  navigator.history.push(currentURL)
+function changeURL(url, setServerContext, documentTitle) {
+  navigator.history.push(url)
 
   setServerContext((state) => {
-    return { ...state, 'currentURL': currentURL.toString() }
+    return { ...state, 'currentURL': url.toString() }
   })
+
+  if (documentTitle) document.title = documentTitle
 }
 
 function SocialAccountIcon({ socialAccount }) {
@@ -255,13 +257,13 @@ export default function Index(
 
   const handleOnDialogFormClose = (setServerContext) => {
     setDialogFormOpen(false)
-    changeURL(new URL(adminSocialAccountsUrl()), setServerContext)
+    changeURL(new URL(adminSocialAccountsUrl()), setServerContext, 'Social Accounts ‹ Admin ‹ Rails 7 Demo Vite')
   }
 
   const handleOnDialogFormOpen = (setServerContext, url, socialAccount) => {
     setDialogFormOpen(true)
     if (socialAccount) setFormSocialAccount(socialAccount)
-    changeURL(url, setServerContext)
+    changeURL(url, setServerContext, 'New Social Account ‹ Admin ‹ Rails 7 Demo Vite')
   }
 
   return (

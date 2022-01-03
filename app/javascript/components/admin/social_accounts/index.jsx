@@ -1,5 +1,5 @@
+import { forwardRef, useState } from 'react'
 import { uniqueId } from 'lodash-es'
-import { useState } from 'react'
 
 import Layout from '/components/layouts/admin'
 import ServerContext from '/turbo_react/server_context'
@@ -33,6 +33,8 @@ import {
   Facebook as FacebookIcon,
   OpenInNew as OpenInNewIcon
 } from '@mui/icons-material'
+
+import ReactTimeAgo from 'react-time-ago'
 
 import AuthenticityTokenField from '/components/application/_authenticity_token_field'
 import DialogForm from './_dialog_form'
@@ -179,7 +181,16 @@ function DeleteAction({ socialAccount }) {
   )
 }
 
+const ReactTimeAgoTooltipContainer = forwardRef((props, ref) => {
+  const { children, verboseDate, ...rest } = props
+
+  return <Tooltip {...rest} title={verboseDate} ref={ref}>{children}</Tooltip>
+})
+ReactTimeAgoTooltipContainer.displayName = 'ReactTimeAgoTooltipContainer'
+
 function TableItem({ handleDialogFormOpen, socialAccount }) {
+  const updatedAtDate = new Date(socialAccount.updatedAt)
+
   return (
     <>
       <TableRow>
@@ -205,7 +216,12 @@ function TableItem({ handleDialogFormOpen, socialAccount }) {
           </Link>
         </TableCell>
         <TableCell rowSpan={2}>
-          {socialAccount.updatedAt}
+          <ReactTimeAgo
+            date={updatedAtDate}
+            timeStyle="round-minute"
+            wrapperComponent={ReactTimeAgoTooltipContainer}
+            tooltip={false}
+          />
         </TableCell>
         <TableCell rowSpan={2}>
           <Stack direction="row" spacing={1}>

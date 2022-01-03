@@ -8,6 +8,7 @@
     ],
     "jsx": "react",
     "module": "es6",
+    "moduleResolution": "node",
     "paths": {
       "*": [
         "node_modules/*"

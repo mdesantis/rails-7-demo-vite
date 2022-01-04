@@ -30,4 +30,4 @@
 // import '~/index.css'
 
 // import.meta.globEager needs a variable declaration, otherwise it raises a syntax error.
-const _initiators = import.meta.globEager('/initiators/application/**/*.{js,jsx}')
+const _initiators = import.meta.globEager('/initiators/proofs_of_concept/**/*.{js,jsx}')

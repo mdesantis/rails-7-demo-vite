@@ -2,6 +2,4 @@
 
 class AdminController < ApplicationController
   include AdminController::SetPageTitleConcern
-
-  layout 'admin'
 end

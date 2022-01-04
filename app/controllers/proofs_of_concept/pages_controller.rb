@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PagesController < ApplicationController
+class ProofsOfConcept::PagesController < ProofsOfConceptController
   before_action :set_pages, only: %i[index]
   before_action :set_page, only: %i[show edit update destroy]
   before_action :set_new_page, only: %i[new]
@@ -22,7 +22,7 @@ class PagesController < ApplicationController
     @page = Page.new(page_params)
 
     if @page.save
-      redirect_to @page, notice: 'Page was successfully created.'
+      redirect_to proofs_of_concept_page_path(@page), notice: 'Page was successfully created.'
     else
       @props = render_to_string :new, formats: :json
       render :new, status: :unprocessable_entity
@@ -31,7 +31,7 @@ class PagesController < ApplicationController
 
   def update
     if @page.update(page_params)
-      redirect_to @page, notice: 'Page was successfully updated.'
+      redirect_to proofs_of_concept_page_path(@page), notice: 'Page was successfully updated.'
     else
       @props = render_to_string :edit, formats: :json
       render :edit, status: :unprocessable_entity
@@ -40,7 +40,7 @@ class PagesController < ApplicationController
 
   def destroy
     @page.destroy
-    redirect_to pages_url, notice: 'Page was successfully destroyed.'
+    redirect_to proofs_of_concept_pages_path, notice: 'Page was successfully destroyed.'
   end
 
   private

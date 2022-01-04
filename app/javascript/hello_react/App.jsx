@@ -4,6 +4,8 @@ import { useState } from 'react'
 
 import logoEnergyYellow from './logoEnergyYellow.svg'
 import logoSeagull from './logoSeagull.svg'
+
+import { proofsOfConceptHelloReact1Path, proofsOfConceptHelloReact2Path } from '/routes'
 import { navigator } from '@hotwired/turbo'
 
 function App(props) {
@@ -32,7 +34,7 @@ function App(props) {
         <p>
           <a
             className="App-link seagull"
-            href="/hello_react"
+            href={proofsOfConceptHelloReact1Path()}
             onClick={(e) => handleChangeLogoLinks(e, 'seagull')}
           >
             Logo Seagull
@@ -40,7 +42,7 @@ function App(props) {
           {' | '}
           <a
             className="App-link energyYellow"
-            href="/hello_react_2"
+            href={proofsOfConceptHelloReact2Path()}
             onClick={(e) => handleChangeLogoLinks(e, 'energyYellow')}
           >
             Logo Energy Yellow

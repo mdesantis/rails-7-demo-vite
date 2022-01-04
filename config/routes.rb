@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
-  resources :pages
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  get 'hello_react' => 'application#hello_react'
-  get 'hello_react_2' => 'application#hello_react_2'
+  namespace :proofs_of_concept, path: 'poc' do
+    get 'hello_react_1' => 'hello_react#hello_react_1'
+    get 'hello_react_2' => 'hello_react#hello_react_2'
+
+    resources :pages
+  end
 
   namespace :admin do
     resources :social_accounts, path: 'social-accounts', except: %i[show]

@@ -1,6 +1,6 @@
 import Form from './_form'
 
-import { pagesPath } from '/routes'
+import { proofsOfConceptPagesPath } from '/routes'
 
 export default function New(props) {
   const { page } = props
@@ -14,7 +14,7 @@ export default function New(props) {
       <br />
 
       <div>
-        <a href={pagesPath()}>Back to pages</a>
+        <a href={proofsOfConceptPagesPath()}>Back to pages</a>
       </div>
     </>
   )

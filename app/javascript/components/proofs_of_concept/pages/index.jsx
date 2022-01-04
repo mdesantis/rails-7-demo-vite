@@ -1,6 +1,6 @@
 import Page from './_page'
 
-import { newPagePath } from '/routes'
+import { newProofsOfConceptPagePath } from '/routes'
 
 export default function Index(props) {
   return (
@@ -13,7 +13,7 @@ export default function Index(props) {
         })}
       </div>
 
-      <a href={newPagePath()}>New page</a>
+      <a href={newProofsOfConceptPagePath()}>New page</a>
     </>
   )
 }

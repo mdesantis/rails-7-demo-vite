@@ -3,12 +3,12 @@ import { useState } from 'react'
 import AuthenticityTokenField from '/components/application/_authenticity_token_field'
 import Errors from './form/_errors'
 
-import { pagePath, pagesPath } from '/routes'
+import { proofsOfConceptPagePath, proofsOfConceptPagesPath } from '/routes'
 
 export default function Form(props) {
   const { page } = props
-
   const newRecord = !page.id
+  const formAction = newRecord ? proofsOfConceptPagesPath() : proofsOfConceptPagePath(page)
 
   const [author, setAuthor] = useState(page.author ?? '')
   const [content, setContent] = useState(page.content ?? '')
@@ -22,7 +22,7 @@ export default function Form(props) {
   }
 
   return (
-    <form action={newRecord ? pagesPath() : pagePath(page)} acceptCharset="utf-8" method="post" data-remote="true">
+    <form action={formAction} acceptCharset="utf-8" method="post" data-remote="true">
       {newRecord || <input type="hidden" name="_method" value="patch" autoComplete="off" />}
       <AuthenticityTokenField />
 

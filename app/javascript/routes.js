@@ -563,21 +563,21 @@ export const editAdminSocialAccountPath = __jsr.r({"id":{"r":true},"format":{}},
 
 /**
  * Generates rails route to
- * /pages/:id/edit(.:format)
+ * /poc/pages/:id/edit(.:format)
  * @param {any} id
  * @param {object | undefined} options
  * @returns {string} route path
  */
-export const editPageUrl = __jsr.r({"id":{"r":true},"format":{}}, [2,[7,"/"],[2,[6,"pages"],[2,[7,"/"],[2,[3,"id"],[2,[7,"/"],[2,[6,"edit"],[1,[2,[8,"."],[3,"format"]]]]]]]]], true);
+export const editProofsOfConceptPageUrl = __jsr.r({"id":{"r":true},"format":{}}, [2,[7,"/"],[2,[6,"poc"],[2,[7,"/"],[2,[6,"pages"],[2,[7,"/"],[2,[3,"id"],[2,[7,"/"],[2,[6,"edit"],[1,[2,[8,"."],[3,"format"]]]]]]]]]]], true);
 
 /**
  * Generates rails route to
- * /pages/:id/edit(.:format)
+ * /poc/pages/:id/edit(.:format)
  * @param {any} id
  * @param {object | undefined} options
  * @returns {string} route path
  */
-export const editPagePath = __jsr.r({"id":{"r":true},"format":{}}, [2,[7,"/"],[2,[6,"pages"],[2,[7,"/"],[2,[3,"id"],[2,[7,"/"],[2,[6,"edit"],[1,[2,[8,"."],[3,"format"]]]]]]]]]);
+export const editProofsOfConceptPagePath = __jsr.r({"id":{"r":true},"format":{}}, [2,[7,"/"],[2,[6,"poc"],[2,[7,"/"],[2,[6,"pages"],[2,[7,"/"],[2,[3,"id"],[2,[7,"/"],[2,[6,"edit"],[1,[2,[8,"."],[3,"format"]]]]]]]]]]]);
 
 /**
  * Generates rails route to
@@ -597,51 +597,83 @@ export const newAdminSocialAccountPath = __jsr.r({"format":{}}, [2,[7,"/"],[2,[6
 
 /**
  * Generates rails route to
- * /pages/new(.:format)
+ * /poc/pages/new(.:format)
  * @param {object | undefined} options
  * @returns {string} route path
  */
-export const newPageUrl = __jsr.r({"format":{}}, [2,[7,"/"],[2,[6,"pages"],[2,[7,"/"],[2,[6,"new"],[1,[2,[8,"."],[3,"format"]]]]]]], true);
+export const newProofsOfConceptPageUrl = __jsr.r({"format":{}}, [2,[7,"/"],[2,[6,"poc"],[2,[7,"/"],[2,[6,"pages"],[2,[7,"/"],[2,[6,"new"],[1,[2,[8,"."],[3,"format"]]]]]]]]], true);
 
 /**
  * Generates rails route to
- * /pages/new(.:format)
+ * /poc/pages/new(.:format)
  * @param {object | undefined} options
  * @returns {string} route path
  */
-export const newPagePath = __jsr.r({"format":{}}, [2,[7,"/"],[2,[6,"pages"],[2,[7,"/"],[2,[6,"new"],[1,[2,[8,"."],[3,"format"]]]]]]]);
+export const newProofsOfConceptPagePath = __jsr.r({"format":{}}, [2,[7,"/"],[2,[6,"poc"],[2,[7,"/"],[2,[6,"pages"],[2,[7,"/"],[2,[6,"new"],[1,[2,[8,"."],[3,"format"]]]]]]]]]);
 
 /**
  * Generates rails route to
- * /pages/:id(.:format)
+ * /poc/hello_react_1(.:format)
+ * @param {object | undefined} options
+ * @returns {string} route path
+ */
+export const proofsOfConceptHelloReact1Url = __jsr.r({"format":{}}, [2,[7,"/"],[2,[6,"poc"],[2,[7,"/"],[2,[6,"hello_react_1"],[1,[2,[8,"."],[3,"format"]]]]]]], true);
+
+/**
+ * Generates rails route to
+ * /poc/hello_react_1(.:format)
+ * @param {object | undefined} options
+ * @returns {string} route path
+ */
+export const proofsOfConceptHelloReact1Path = __jsr.r({"format":{}}, [2,[7,"/"],[2,[6,"poc"],[2,[7,"/"],[2,[6,"hello_react_1"],[1,[2,[8,"."],[3,"format"]]]]]]]);
+
+/**
+ * Generates rails route to
+ * /poc/hello_react_2(.:format)
+ * @param {object | undefined} options
+ * @returns {string} route path
+ */
+export const proofsOfConceptHelloReact2Url = __jsr.r({"format":{}}, [2,[7,"/"],[2,[6,"poc"],[2,[7,"/"],[2,[6,"hello_react_2"],[1,[2,[8,"."],[3,"format"]]]]]]], true);
+
+/**
+ * Generates rails route to
+ * /poc/hello_react_2(.:format)
+ * @param {object | undefined} options
+ * @returns {string} route path
+ */
+export const proofsOfConceptHelloReact2Path = __jsr.r({"format":{}}, [2,[7,"/"],[2,[6,"poc"],[2,[7,"/"],[2,[6,"hello_react_2"],[1,[2,[8,"."],[3,"format"]]]]]]]);
+
+/**
+ * Generates rails route to
+ * /poc/pages/:id(.:format)
  * @param {any} id
  * @param {object | undefined} options
  * @returns {string} route path
  */
-export const pageUrl = __jsr.r({"id":{"r":true},"format":{}}, [2,[7,"/"],[2,[6,"pages"],[2,[7,"/"],[2,[3,"id"],[1,[2,[8,"."],[3,"format"]]]]]]], true);
+export const proofsOfConceptPageUrl = __jsr.r({"id":{"r":true},"format":{}}, [2,[7,"/"],[2,[6,"poc"],[2,[7,"/"],[2,[6,"pages"],[2,[7,"/"],[2,[3,"id"],[1,[2,[8,"."],[3,"format"]]]]]]]]], true);
 
 /**
  * Generates rails route to
- * /pages/:id(.:format)
+ * /poc/pages/:id(.:format)
  * @param {any} id
  * @param {object | undefined} options
  * @returns {string} route path
  */
-export const pagePath = __jsr.r({"id":{"r":true},"format":{}}, [2,[7,"/"],[2,[6,"pages"],[2,[7,"/"],[2,[3,"id"],[1,[2,[8,"."],[3,"format"]]]]]]]);
+export const proofsOfConceptPagePath = __jsr.r({"id":{"r":true},"format":{}}, [2,[7,"/"],[2,[6,"poc"],[2,[7,"/"],[2,[6,"pages"],[2,[7,"/"],[2,[3,"id"],[1,[2,[8,"."],[3,"format"]]]]]]]]]);
 
 /**
  * Generates rails route to
- * /pages(.:format)
+ * /poc/pages(.:format)
  * @param {object | undefined} options
  * @returns {string} route path
  */
-export const pagesUrl = __jsr.r({"format":{}}, [2,[7,"/"],[2,[6,"pages"],[1,[2,[8,"."],[3,"format"]]]]], true);
+export const proofsOfConceptPagesUrl = __jsr.r({"format":{}}, [2,[7,"/"],[2,[6,"poc"],[2,[7,"/"],[2,[6,"pages"],[1,[2,[8,"."],[3,"format"]]]]]]], true);
 
 /**
  * Generates rails route to
- * /pages(.:format)
+ * /poc/pages(.:format)
  * @param {object | undefined} options
  * @returns {string} route path
  */
-export const pagesPath = __jsr.r({"format":{}}, [2,[7,"/"],[2,[6,"pages"],[1,[2,[8,"."],[3,"format"]]]]]);
+export const proofsOfConceptPagesPath = __jsr.r({"format":{}}, [2,[7,"/"],[2,[6,"poc"],[2,[7,"/"],[2,[6,"pages"],[1,[2,[8,"."],[3,"format"]]]]]]]);
 

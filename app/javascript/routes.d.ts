@@ -153,24 +153,24 @@ export const editAdminSocialAccountPath: ((
 
 /**
  * Generates rails route to
- * /pages/:id/edit(.:format)
+ * /poc/pages/:id/edit(.:format)
  * @param {any} id
  * @param {object | undefined} options
  * @returns {string} route path
  */
-export const editPageUrl: ((
+export const editProofsOfConceptPageUrl: ((
   id: RequiredRouteParameter,
   options?: {format?: OptionalRouteParameter} & RouteOptions
 ) => string) & RouteHelperExtras;
 
 /**
  * Generates rails route to
- * /pages/:id/edit(.:format)
+ * /poc/pages/:id/edit(.:format)
  * @param {any} id
  * @param {object | undefined} options
  * @returns {string} route path
  */
-export const editPagePath: ((
+export const editProofsOfConceptPagePath: ((
   id: RequiredRouteParameter,
   options?: {format?: OptionalRouteParameter} & RouteOptions
 ) => string) & RouteHelperExtras;
@@ -197,65 +197,105 @@ export const newAdminSocialAccountPath: ((
 
 /**
  * Generates rails route to
- * /pages/new(.:format)
+ * /poc/pages/new(.:format)
  * @param {object | undefined} options
  * @returns {string} route path
  */
-export const newPageUrl: ((
+export const newProofsOfConceptPageUrl: ((
   options?: {format?: OptionalRouteParameter} & RouteOptions
 ) => string) & RouteHelperExtras;
 
 /**
  * Generates rails route to
- * /pages/new(.:format)
+ * /poc/pages/new(.:format)
  * @param {object | undefined} options
  * @returns {string} route path
  */
-export const newPagePath: ((
+export const newProofsOfConceptPagePath: ((
   options?: {format?: OptionalRouteParameter} & RouteOptions
 ) => string) & RouteHelperExtras;
 
 /**
  * Generates rails route to
- * /pages/:id(.:format)
+ * /poc/hello_react_1(.:format)
+ * @param {object | undefined} options
+ * @returns {string} route path
+ */
+export const proofsOfConceptHelloReact1Url: ((
+  options?: {format?: OptionalRouteParameter} & RouteOptions
+) => string) & RouteHelperExtras;
+
+/**
+ * Generates rails route to
+ * /poc/hello_react_1(.:format)
+ * @param {object | undefined} options
+ * @returns {string} route path
+ */
+export const proofsOfConceptHelloReact1Path: ((
+  options?: {format?: OptionalRouteParameter} & RouteOptions
+) => string) & RouteHelperExtras;
+
+/**
+ * Generates rails route to
+ * /poc/hello_react_2(.:format)
+ * @param {object | undefined} options
+ * @returns {string} route path
+ */
+export const proofsOfConceptHelloReact2Url: ((
+  options?: {format?: OptionalRouteParameter} & RouteOptions
+) => string) & RouteHelperExtras;
+
+/**
+ * Generates rails route to
+ * /poc/hello_react_2(.:format)
+ * @param {object | undefined} options
+ * @returns {string} route path
+ */
+export const proofsOfConceptHelloReact2Path: ((
+  options?: {format?: OptionalRouteParameter} & RouteOptions
+) => string) & RouteHelperExtras;
+
+/**
+ * Generates rails route to
+ * /poc/pages/:id(.:format)
  * @param {any} id
  * @param {object | undefined} options
  * @returns {string} route path
  */
-export const pageUrl: ((
+export const proofsOfConceptPageUrl: ((
   id: RequiredRouteParameter,
   options?: {format?: OptionalRouteParameter} & RouteOptions
 ) => string) & RouteHelperExtras;
 
 /**
  * Generates rails route to
- * /pages/:id(.:format)
+ * /poc/pages/:id(.:format)
  * @param {any} id
  * @param {object | undefined} options
  * @returns {string} route path
  */
-export const pagePath: ((
+export const proofsOfConceptPagePath: ((
   id: RequiredRouteParameter,
   options?: {format?: OptionalRouteParameter} & RouteOptions
 ) => string) & RouteHelperExtras;
 
 /**
  * Generates rails route to
- * /pages(.:format)
+ * /poc/pages(.:format)
  * @param {object | undefined} options
  * @returns {string} route path
  */
-export const pagesUrl: ((
+export const proofsOfConceptPagesUrl: ((
   options?: {format?: OptionalRouteParameter} & RouteOptions
 ) => string) & RouteHelperExtras;
 
 /**
  * Generates rails route to
- * /pages(.:format)
+ * /poc/pages(.:format)
  * @param {object | undefined} options
  * @returns {string} route path
  */
-export const pagesPath: ((
+export const proofsOfConceptPagesPath: ((
   options?: {format?: OptionalRouteParameter} & RouteOptions
 ) => string) & RouteHelperExtras;
 

@@ -1,4 +1,4 @@
-import { pagePath } from '/routes'
+import { proofsOfConceptPagePath } from '/routes'
 
 export default function Page(props) {
   const { page } = props
@@ -14,7 +14,7 @@ export default function Page(props) {
       </p>
 
       <p>
-        <a href={pagePath(page)}>Show this page</a>
+        <a href={proofsOfConceptPagePath(page)}>Show this page</a>
       </p>
     </div>
   )

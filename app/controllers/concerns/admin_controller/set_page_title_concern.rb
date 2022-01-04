@@ -27,7 +27,8 @@ module AdminController::SetPageTitleConcern
   def infer_fragments_from_class_name
     breadcrumbs = self.class.to_s.split('::')
     breadcrumbs.pop
-    breadcrumbs.reverse
+    breadcrumbs.reverse!
+    breadcrumbs.map! { |v| v.underscore.titleize }
   end
 
   def fetch_model_class
@@ -67,10 +68,24 @@ module AdminController::SetPageTitleConcern
     @page_title = ["New #{model_name_fragment}", *infer_fragments_from_class_name]
   end
 
+  def set_page_title_for_show_action
+    return unless (model_name_fragment = fetch_model_name_fragment)
+
+    @page_title = ["Show #{model_name_fragment}", *infer_fragments_from_class_name]
+  end
+
+  def set_page_title_for_edit_action
+    return unless (model_name_fragment = fetch_model_name_fragment)
+
+    @page_title = ["Edit #{model_name_fragment}", *infer_fragments_from_class_name]
+  end
+
   def set_page_title
     case action_name
     when 'index' then set_page_title_for_index_action
     when 'new' then set_page_title_for_new_action
+    when 'show' then set_page_title_for_show_action
+    when 'edit' then set_page_title_for_edit_action
     end
   end
 end

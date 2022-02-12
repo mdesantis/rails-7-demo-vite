@@ -89,6 +89,14 @@ export default class TurboReact {
     if (!this.includeServerContext) return
 
     const element = document.getElementById('server-context')
+
+    if (!element) {
+      throw new Error(
+        'The $("#server-context") element that should define the server context was not found. Are you sure you ' +
+        'added it to server-side layout?'
+      )
+    }
+
     this.serverContext = JSON.parse(element.textContent)
   }
 
